@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Readiness Assessment | CareerReady</title>
+
+    <style>
+        /* =========================================================
+           PAGE
+        ========================================================= */
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            color: #1f2937;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .assessment-page {
+            min-height: 100vh;
+            padding: 35px;
+            box-sizing: border-box;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            color: #111827;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .header-badge {
+            background: #eaf2ff;
+            color: #2563eb;
+            border: 1px solid #cfe0ff;
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        .progress-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .progress-percent {
+            font-size: 13px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #2563eb;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+
+        /* =========================================================
+           ASSESSMENT SECTIONS
+        ========================================================= */
+
+        .assessment-section {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .section-header {
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            margin: 0 0 6px;
+            color: #111827;
+            font-size: 20px;
+        }
+
+        .section-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .weight-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 10px;
+            border-radius: 15px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           QUESTIONS
+        ========================================================= */
+
+        .question {
+            padding: 18px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            margin: 0 0 14px;
+            color: #111827;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .option {
+            display: block;
+            margin-bottom: 9px;
+        }
+
+        .option label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 13px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #4b5563;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .option label:hover {
+            border-color: #93c5fd;
+            background: #f8fbff;
+        }
+
+        .option input {
+            accent-color: #2563eb;
+        }
+
+
+        /* =========================================================
+           RATING QUESTIONS
+        ========================================================= */
+
+        .rating-group {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .rating-option input {
+            display: none;
+        }
+
+        .rating-option label {
+            display: block;
+            padding: 13px 8px;
+            text-align: center;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #4b5563;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .rating-option input:checked + label {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #ffffff;
+        }
+
+
+        /* =========================================================
+           SUBMIT
+        ========================================================= */
+
+        .submit-section {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .submit-info h3 {
+            margin: 0 0 5px;
+            color: #111827;
+            font-size: 16px;
+        }
+
+        .submit-info p {
+            margin: 0;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .submit-button {
+            border: none;
+            background: #2563eb;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .submit-button:hover {
+            background: #1d4ed8;
+        }
+
+        .submit-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+
+        /* =========================================================
+           MESSAGE
+        ========================================================= */
+
+        .message-box {
+            display: none;
+            padding: 14px 16px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .message-success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .message-error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .assessment-page {
+                padding: 20px 15px;
+            }
+
+            .page-header {
+                flex-direction: column;
+            }
+
+            .rating-group {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .submit-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="assessment-page">
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <section class="page-header">
+
+            <div>
+                <h1>Readiness Assessment</h1>
+
+                <p>
+                    Complete the assessment to calculate
+                    your current placement readiness.
+                </p>
+            </div>
+
+            <div class="header-badge">
+                CareerReady
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROGRESS
+        ====================================================== -->
+
+        <section class="progress-card">
+
+            <div class="progress-top">
+
+                <span class="progress-title">
+                    Assessment Progress
+                </span>
+
+                <span
+                    class="progress-percent"
+                    id="progressPercent"
+                >
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <form id="assessmentForm">
+
+            <!-- =================================================
+                 TECHNICAL
+            ================================================== -->
+
+            <section class="assessment-section">
+
+                <div class="section-header">
+
+                    <h2>
+                        1. Technical Assessment
+                    </h2>
+
+                    <p>
+                        Answer the following technical
+                        questions.
+                    </p>
+
+                    <span class="weight-badge">
+                        Weight: 40%
+                    </span>
+
+                </div>
+
+
+                <!-- Q1 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q1. Which data structure follows
+                        the LIFO principle?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical1"
+                                value="0"
+                            >
+                            Queue
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical1"
+                                value="1"
+                            >
+                            Stack
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical1"
+                                value="0"
+                            >
+                            Linked List
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical1"
+                                value="0"
+                            >
+                            Tree
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q2 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q2. Which HTTP method is commonly
+                        used to create a new resource?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical2"
+                                value="1"
+                            >
+                            POST
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical2"
+                                value="0"
+                            >
+                            GET
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical2"
+                                value="0"
+                            >
+                            DELETE
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical2"
+                                value="0"
+                            >
+                            HEAD
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q3 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q3. Which language runs directly
+                        in a modern web browser?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical3"
+                                value="0"
+                            >
+                            Python
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical3"
+                                value="1"
+                            >
+                            JavaScript
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical3"
+                                value="0"
+                            >
+                            C
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical3"
+                                value="0"
+                            >
+                            SQL
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q4 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q4. Which database is a NoSQL
+                        document database?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical4"
+                                value="0"
+                            >
+                            MySQL
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical4"
+                                value="1"
+                            >
+                            MongoDB
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical4"
+                                value="0"
+                            >
+                            PostgreSQL
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical4"
+                                value="0"
+                            >
+                            Oracle SQL
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q5 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q5. What is the main purpose of Git?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical5"
+                                value="1"
+                            >
+                            Version control
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical5"
+                                value="0"
+                            >
+                            Database hosting only
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical5"
+                                value="0"
+                            >
+                            Image editing
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="technical5"
+                                value="0"
+                            >
+                            Operating system installation
+                        </label>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 APTITUDE
+            ================================================== -->
+
+            <section class="assessment-section">
+
+                <div class="section-header">
+
+                    <h2>
+                        2. Aptitude Assessment
+                    </h2>
+
+                    <p>
+                        Test your quantitative and
+                        logical reasoning ability.
+                    </p>
+
+                    <span class="weight-badge">
+                        Weight: 20%
+                    </span>
+
+                </div>
+
+
+                <!-- Q1 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q1. If 20% of a number is 50,
+                        what is the number?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude1"
+                                value="0"
+                            >
+                            200
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude1"
+                                value="1"
+                            >
+                            250
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude1"
+                                value="0"
+                            >
+                            300
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude1"
+                                value="0"
+                            >
+                            350
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q2 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q2. Find the next number:
+                        2, 4, 8, 16, ?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude2"
+                                value="0"
+                            >
+                            20
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude2"
+                                value="1"
+                            >
+                            32
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude2"
+                                value="0"
+                            >
+                            24
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude2"
+                                value="0"
+                            >
+                            36
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q3 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q3. A train travels 60 km in
+                        1 hour. How far will it travel
+                        in 3 hours?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude3"
+                                value="1"
+                            >
+                            180 km
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude3"
+                                value="0"
+                            >
+                            120 km
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude3"
+                                value="0"
+                            >
+                            150 km
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude3"
+                                value="0"
+                            >
+                            240 km
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q4 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q4. If all programmers are developers
+                        and some developers are designers,
+                        which statement is definitely true?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude4"
+                                value="1"
+                            >
+                            All programmers are developers
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude4"
+                                value="0"
+                            >
+                            All developers are programmers
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude4"
+                                value="0"
+                            >
+                            All designers are programmers
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude4"
+                                value="0"
+                            >
+                            No developer is a designer
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- Q5 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q5. What is the average of
+                        10, 20 and 30?
+                    </p>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude5"
+                                value="0"
+                            >
+                            15
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude5"
+                                value="1"
+                            >
+                            20
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude5"
+                                value="0"
+                            >
+                            25
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <label>
+                            <input
+                                type="radio"
+                                name="aptitude5"
+                                value="0"
+                            >
+                            30
+                        </label>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 COMMUNICATION
+            ================================================== -->
+
+            <section class="assessment-section">
+
+                <div class="section-header">
+
+                    <h2>
+                        3. Communication
+                    </h2>
+
+                    <p>
+                        Rate your current communication
+                        and professional interaction ability.
+                    </p>
+
+                    <span class="weight-badge">
+                        Weight: 15%
+                    </span>
+
+                </div>
+
+
+                <!-- Q1 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q1. How confident are you when
+                        explaining a technical concept?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication1"
+                                id="communication1_1"
+                                value="20"
+                            >
+                            <label for="communication1_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication1"
+                                id="communication1_2"
+                                value="40"
+                            >
+                            <label for="communication1_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication1"
+                                id="communication1_3"
+                                value="60"
+                            >
+                            <label for="communication1_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication1"
+                                id="communication1_4"
+                                value="80"
+                            >
+                            <label for="communication1_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication1"
+                                id="communication1_5"
+                                value="100"
+                            >
+                            <label for="communication1_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Q2 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q2. How comfortable are you
+                        speaking in an interview?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication2"
+                                id="communication2_1"
+                                value="20"
+                            >
+                            <label for="communication2_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication2"
+                                id="communication2_2"
+                                value="40"
+                            >
+                            <label for="communication2_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication2"
+                                id="communication2_3"
+                                value="60"
+                            >
+                            <label for="communication2_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication2"
+                                id="communication2_4"
+                                value="80"
+                            >
+                            <label for="communication2_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication2"
+                                id="communication2_5"
+                                value="100"
+                            >
+                            <label for="communication2_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Q3 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q3. How effectively can you
+                        communicate with a team?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication3"
+                                id="communication3_1"
+                                value="20"
+                            >
+                            <label for="communication3_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication3"
+                                id="communication3_2"
+                                value="40"
+                            >
+                            <label for="communication3_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication3"
+                                id="communication3_3"
+                                value="60"
+                            >
+                            <label for="communication3_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication3"
+                                id="communication3_4"
+                                value="80"
+                            >
+                            <label for="communication3_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="communication3"
+                                id="communication3_5"
+                                value="100"
+                            >
+                            <label for="communication3_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PROJECTS
+            ================================================== -->
+
+            <section class="assessment-section">
+
+                <div class="section-header">
+
+                    <h2>
+                        4. Project Readiness
+                    </h2>
+
+                    <p>
+                        Evaluate your practical project
+                        preparation for placement.
+                    </p>
+
+                    <span class="weight-badge">
+                        Weight: 15%
+                    </span>
+
+                </div>
+
+
+                <!-- Q1 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q1. Can you explain your main project
+                        clearly during an interview?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects1"
+                                id="projects1_1"
+                                value="20"
+                            >
+                            <label for="projects1_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects1"
+                                id="projects1_2"
+                                value="40"
+                            >
+                            <label for="projects1_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects1"
+                                id="projects1_3"
+                                value="60"
+                            >
+                            <label for="projects1_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects1"
+                                id="projects1_4"
+                                value="80"
+                            >
+                            <label for="projects1_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects1"
+                                id="projects1_5"
+                                value="100"
+                            >
+                            <label for="projects1_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Q2 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q2. Do you understand the technologies
+                        used in your project?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects2"
+                                id="projects2_1"
+                                value="20"
+                            >
+                            <label for="projects2_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects2"
+                                id="projects2_2"
+                                value="40"
+                            >
+                            <label for="projects2_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects2"
+                                id="projects2_3"
+                                value="60"
+                            >
+                            <label for="projects2_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects2"
+                                id="projects2_4"
+                                value="80"
+                            >
+                            <label for="projects2_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects2"
+                                id="projects2_5"
+                                value="100"
+                            >
+                            <label for="projects2_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Q3 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q3. Can you explain your individual
+                        contribution to your project?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects3"
+                                id="projects3_1"
+                                value="20"
+                            >
+                            <label for="projects3_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects3"
+                                id="projects3_2"
+                                value="40"
+                            >
+                            <label for="projects3_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects3"
+                                id="projects3_3"
+                                value="60"
+                            >
+                            <label for="projects3_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects3"
+                                id="projects3_4"
+                                value="80"
+                            >
+                            <label for="projects3_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="projects3"
+                                id="projects3_5"
+                                value="100"
+                            >
+                            <label for="projects3_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MOCK INTERVIEW
+            ================================================== -->
+
+            <section class="assessment-section">
+
+                <div class="section-header">
+
+                    <h2>
+                        5. Mock Interview Readiness
+                    </h2>
+
+                    <p>
+                        Rate your confidence for technical
+                        and HR interview situations.
+                    </p>
+
+                    <span class="weight-badge">
+                        Weight: 10%
+                    </span>
+
+                </div>
+
+
+                <!-- Q1 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q1. How confident are you answering
+                        technical interview questions?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock1"
+                                id="mock1_1"
+                                value="20"
+                            >
+                            <label for="mock1_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock1"
+                                id="mock1_2"
+                                value="40"
+                            >
+                            <label for="mock1_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock1"
+                                id="mock1_3"
+                                value="60"
+                            >
+                            <label for="mock1_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock1"
+                                id="mock1_4"
+                                value="80"
+                            >
+                            <label for="mock1_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock1"
+                                id="mock1_5"
+                                value="100"
+                            >
+                            <label for="mock1_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Q2 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q2. How prepared are you for common
+                        HR interview questions?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock2"
+                                id="mock2_1"
+                                value="20"
+                            >
+                            <label for="mock2_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock2"
+                                id="mock2_2"
+                                value="40"
+                            >
+                            <label for="mock2_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock2"
+                                id="mock2_3"
+                                value="60"
+                            >
+                            <label for="mock2_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock2"
+                                id="mock2_4"
+                                value="80"
+                            >
+                            <label for="mock2_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock2"
+                                id="mock2_5"
+                                value="100"
+                            >
+                            <label for="mock2_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Q3 -->
+
+                <div class="question">
+
+                    <p class="question-text">
+                        Q3. How confident are you when answering
+                        unexpected interview questions?
+                    </p>
+
+                    <div class="rating-group">
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock3"
+                                id="mock3_1"
+                                value="20"
+                            >
+                            <label for="mock3_1">1</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock3"
+                                id="mock3_2"
+                                value="40"
+                            >
+                            <label for="mock3_2">2</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock3"
+                                id="mock3_3"
+                                value="60"
+                            >
+                            <label for="mock3_3">3</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock3"
+                                id="mock3_4"
+                                value="80"
+                            >
+                            <label for="mock3_4">4</label>
+                        </div>
+
+                        <div class="rating-option">
+                            <input
+                                type="radio"
+                                name="mock3"
+                                id="mock3_5"
+                                value="100"
+                            >
+                            <label for="mock3_5">5</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MESSAGE
+            ================================================== -->
+
+            <div
+                id="messageBox"
+                class="message-box"
+            ></div>
+
+
+            <!-- =================================================
+                 SUBMIT
+            ================================================== -->
+
+            <section class="submit-section">
+
+                <div class="submit-info">
+
+                    <h3>
+                        Complete Your Assessment
+                    </h3>
+
+                    <p>
+                        Your score will be calculated using
+                        the CareerReady readiness weightage.
+                    </p>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                    id="submitButton"
+                >
+                    Calculate Readiness
+                </button>
+
+            </section>
+
+        </form>
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+    <script src="../js/studentAssessment.js"></script>
+
+</body>
+</html>

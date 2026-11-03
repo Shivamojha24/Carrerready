@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mentor Dashboard | CareerReady</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --bg: #FAF8FF;
+            --card: #FFFFFF;
+            --secondary: #F3EEFF;
+            --lav-light: #EDE5FF;
+            --lavender: #B8A1F7;
+            --purple: #8B5CF6;
+            --purple-dark: #6D28D9;
+            --text: #2E2347;
+            --muted: #766B8A;
+            --border: #E5DDF7;
+            --hover: #F0EAFE;
+            --shadow: rgba(109, 40, 217, 0.10);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--purple);
+            outline-offset: 2px;
+        }
+
+        /* ---------- Layout surfaces ---------- */
+        .sidebar {
+            background: linear-gradient(180deg, #FFFFFF 0%, var(--secondary) 100%);
+            border-right: 1px solid var(--border);
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 18px var(--shadow);
+        }
+
+        .ink { color: var(--text); }
+        .muted { color: var(--muted); }
+        .divider { border-color: var(--border); }
+
+        .topbar {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-mark {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+        }
+
+        .avatar {
+            background: var(--lav-light);
+            border: 1px solid var(--lavender);
+            color: var(--purple-dark);
+        }
+
+        /* ---------- Navigation ---------- */
+        .nav-item {
+            color: var(--muted);
+            transition: all 0.2s ease;
+        }
+
+        .nav-item .nav-ico {
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: var(--lav-light);
+            color: var(--purple);
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--hover);
+            color: var(--purple-dark);
+        }
+
+        .nav-item.active {
+            background: var(--lav-light);
+            color: var(--purple-dark);
+            font-weight: 600;
+            box-shadow: inset 3px 0 0 var(--purple);
+        }
+
+        .nav-item.active .nav-ico {
+            background: var(--purple);
+            color: #FFFFFF;
+        }
+
+        .logout-btn {
+            color: var(--muted);
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #FEF2F2;
+            color: #B91C1C;
+        }
+
+        /* ---------- Summary cards ---------- */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--lavender), var(--purple));
+        }
+
+        .v-total   { color: var(--purple-dark); }
+        .v-verified { color: #15803D; }
+        .v-pending { color: #B45309; }
+        .v-cgpa    { color: var(--purple); }
+
+        /* ---------- Buttons ---------- */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 16px rgba(109, 40, 217, 0.35);
+            filter: brightness(1.06);
+        }
+
+        .btn-secondary {
+            background: #FFFFFF;
+            color: var(--purple-dark);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--hover);
+            border-color: var(--lavender);
+        }
+
+        .action-btn { transition: all 0.2s ease; }
+        .action-btn:hover { transform: translateY(-1px); }
+
+        /* ---------- Inputs ---------- */
+        .field {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+
+        .field::placeholder { color: var(--muted); opacity: 0.8; }
+
+        .field:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.20);
+        }
+
+        select option { background: #FFFFFF; color: var(--text); }
+
+        /* ---------- Status badges ---------- */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-verified   { background: #DCFCE7; color: #15803D; }
+        .status-submitted  { background: var(--lav-light); color: var(--purple-dark); }
+        .status-incomplete { background: #FEF3C7; color: #B45309; }
+        .status-correction { background: #FEE2E2; color: #B91C1C; }
+
+        .semester-badge {
+            background: var(--purple);
+            color: #FFFFFF;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ---------- Table ---------- */
+        .table-head { background: var(--secondary); }
+        .table-head th { color: var(--purple-dark); }
+
+        .table-row { border-top: 1px solid var(--border); }
+        .table-row:hover { background: var(--hover); }
+
+        .progress-track {
+            height: 8px;
+            background: var(--lav-light);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--lavender), var(--purple));
+            border-radius: 999px;
+        }
+
+        /* ---------- Modal ---------- */
+        .modal-backdrop {
+            background: rgba(46, 35, 71, 0.55);
+            backdrop-filter: blur(5px);
+        }
+
+        .tile {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* ============================================================
+           Overrides for JavaScript-generated content (rows, badges,
+           progress bars, skills). These remap the old dark-theme
+           Tailwind utilities to the lavender palette and use higher
+           specificity (html body) so they win over the Tailwind CDN.
+        ============================================================ */
+        html body .text-white, html body .text-gray-100, html body .text-gray-200 { color: var(--text); }
+        html body .text-gray-300, html body .text-gray-400,
+        html body .text-gray-500, html body .text-gray-600 { color: var(--muted); }
+        html body .text-blue-300, html body .text-blue-400, html body .text-blue-500 { color: var(--purple); }
+        html body .text-green-400 { color: #15803D; }
+        html body .text-yellow-400, html body .text-amber-400 { color: #B45309; }
+        html body .text-red-400 { color: #B91C1C; }
+
+        html body .bg-gray-700, html body .bg-gray-800 { background-color: var(--lav-light); }
+        html body .bg-gray-900, html body .bg-gray-950 { background-color: var(--secondary); }
+        html body .bg-blue-500, html body .bg-blue-600 { background-color: var(--purple); color: #FFFFFF; }
+        html body .bg-blue-600\/20, html body .bg-blue-500\/10 { background-color: var(--lav-light); }
+        html body .hover\:bg-gray-700:hover, html body .hover\:bg-gray-800:hover { background-color: var(--hover); }
+        html body .hover\:bg-blue-500:hover { background-color: var(--purple-dark); }
+        html body .border-gray-700, html body .border-gray-800 { border-color: var(--border); }
+
+        html body #studentTableBody td { color: var(--muted); vertical-align: middle; }
+        html body #studentTableBody td:first-child { color: var(--text); }
+        html body #studentTableBody button,
+        html body #studentTableBody a {
+            background: #FFFFFF;
+            color: var(--purple-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        html body #studentTableBody button:hover,
+        html body #studentTableBody a:hover {
+            background: var(--hover);
+            border-color: var(--lavender);
+        }
+
+        html body #modalSkills > * {
+            background: var(--lav-light);
+            color: var(--purple-dark);
+            border: 1px solid #D9CCFB;
+            border-radius: 999px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        html body #loadingState > div:first-child {
+            border-color: var(--lav-light);
+            border-top-color: var(--purple);
+        }
+
+        html body #errorState { border-color: rgba(239, 68, 68, 0.35); }
+        html body #errorState > p:first-child { color: #B91C1C; }
+        html body #errorMessage { color: var(--text); }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            main { margin-left: 0 !important; }
+            .mobile-menu { display: flex !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="min-h-screen flex">
+
+    <!-- ============================================================
+         SIDEBAR
+    ============================================================ -->
+
+    <aside class="sidebar w-64 min-h-screen fixed left-0 top-0 bottom-0 hidden md:block">
+
+        <div class="px-6 py-6 border-b divider">
+
+            <div class="flex items-center gap-3">
+
+                <div class="brand-mark w-10 h-10 rounded-xl flex items-center justify-center">
+                    <span class="font-bold text-white text-lg">C</span>
+                </div>
+
+                <div>
+                    <h1 class="font-bold text-lg" style="color: var(--purple-dark)">
+                        CareerReady
+                    </h1>
+
+                    <p class="text-xs muted">
+                        Placement Platform
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="p-4 space-y-2">
+
+            <a href="dashboard.html"
+               class="nav-item active flex items-center gap-3 px-4 py-3 rounded-lg text-sm">
+
+                <span class="nav-ico">▦</span>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="students.html"
+               class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm">
+
+                <span class="nav-ico">👥</span>
+
+                <span>Students</span>
+
+            </a>
+
+
+            <a href="reviews.html"
+               class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm">
+
+                <span class="nav-ico">✓</span>
+
+                <span>Reviews</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t divider">
+
+            <button
+                id="logoutBtn"
+                class="logout-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm">
+
+                <span class="nav-ico" style="background: transparent">↪</span>
+
+                <span>Logout</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ============================================================
+         MAIN CONTENT
+    ============================================================ -->
+
+    <main class="flex-1 md:ml-64 min-w-0">
+
+        <!-- Mobile Header -->
+
+        <header class="mobile-menu topbar hidden px-5 py-4 items-center justify-between">
+
+            <div>
+                <p class="font-bold" style="color: var(--purple-dark)">
+                    CareerReady
+                </p>
+
+                <p class="text-xs muted">
+                    Mentor Portal
+                </p>
+            </div>
+
+            <button
+                id="mobileLogoutBtn"
+                class="btn-secondary px-3 py-1.5 rounded-lg text-sm font-medium">
+
+                Logout
+
+            </button>
+
+        </header>
+
+
+        <!-- Top Header -->
+
+        <div class="topbar">
+
+            <div class="px-6 md:px-8 py-5 flex flex-col md:flex-row
+                        md:items-center md:justify-between gap-4">
+
+                <div>
+
+                    <p class="text-sm muted">
+                        Mentor Portal
+                    </p>
+
+                    <h2 class="text-2xl font-bold mt-1" style="color: var(--purple-dark)">
+                        Student Management
+                    </h2>
+
+                    <p class="text-sm muted mt-1">
+                        Monitor academic progress and placement readiness.
+                    </p>
+
+                </div>
+
+
+                <div class="flex items-center gap-3">
+
+                    <div class="text-right hidden sm:block">
+
+                        <p id="mentorName"
+                           class="text-sm font-semibold ink">
+                            Mentor
+                        </p>
+
+                        <p class="text-xs muted">
+                            Mentor
+                        </p>
+
+                    </div>
+
+                    <div class="avatar w-10 h-10 rounded-full flex items-center
+                                justify-center font-bold">
+
+                        M
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Content -->
+
+        <section class="p-6 md:p-8">
+
+
+            <!-- Loading -->
+
+            <div id="loadingState"
+                 class="flex flex-col items-center justify-center py-24">
+
+                <div class="w-9 h-9 border-2 border-gray-700
+                            border-t-blue-500 rounded-full animate-spin">
+                </div>
+
+                <p class="muted text-sm mt-4">
+                    Loading students...
+                </p>
+
+            </div>
+
+
+            <!-- Error -->
+
+            <div id="errorState"
+                 class="hidden card rounded-xl p-6 border-red-500/20">
+
+                <p class="font-semibold">
+                    Unable to load students
+                </p>
+
+                <p id="errorMessage"
+                   class="text-sm mt-2">
+                </p>
+
+                <button
+                    id="retryBtn"
+                    class="btn-primary mt-4 px-4 py-2
+                           rounded-lg text-sm font-medium">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+
+            <!-- Dashboard -->
+
+            <div id="dashboardContent" class="hidden">
+
+
+                <!-- ====================================================
+                     SUMMARY CARDS
+                ==================================================== -->
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+
+
+                    <div class="card stat-card rounded-xl p-5">
+
+                        <p class="text-sm muted">
+                            Total Students
+                        </p>
+
+                        <p id="totalStudents"
+                           class="v-total text-3xl font-bold mt-2">
+                            0
+                        </p>
+
+                        <p class="text-xs muted mt-2">
+                            Students under management
+                        </p>
+
+                    </div>
+
+
+                    <div class="card stat-card rounded-xl p-5">
+
+                        <p class="text-sm muted">
+                            Verified Profiles
+                        </p>
+
+                        <p id="verifiedStudents"
+                           class="v-verified text-3xl font-bold mt-2">
+                            0
+                        </p>
+
+                        <p class="text-xs muted mt-2">
+                            Profiles verified
+                        </p>
+
+                    </div>
+
+
+                    <div class="card stat-card rounded-xl p-5">
+
+                        <p class="text-sm muted">
+                            Pending Profiles
+                        </p>
+
+                        <p id="pendingStudents"
+                           class="v-pending text-3xl font-bold mt-2">
+                            0
+                        </p>
+
+                        <p class="text-xs muted mt-2">
+                            Need mentor attention
+                        </p>
+
+                    </div>
+
+
+                    <div class="card stat-card rounded-xl p-5">
+
+                        <p class="text-sm muted">
+                            Average CGPA
+                        </p>
+
+                        <p id="averageCgpa"
+                           class="v-cgpa text-3xl font-bold mt-2">
+                            —
+                        </p>
+
+                        <p class="text-xs muted mt-2">
+                            Across available profiles
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ====================================================
+                     STUDENT MANAGEMENT
+                ==================================================== -->
+
+                <div class="card rounded-xl overflow-hidden">
+
+
+                    <!-- Header -->
+
+                    <div class="p-5 md:p-6 border-b divider">
+
+                        <div class="flex flex-col lg:flex-row
+                                    lg:items-center lg:justify-between gap-4">
+
+                            <div>
+
+                                <h3 class="text-lg font-semibold" style="color: var(--purple-dark)">
+                                    Students
+                                </h3>
+
+                                <p class="text-sm muted mt-1">
+                                    View and manage academic progression.
+                                </p>
+
+                            </div>
+
+
+                            <div class="flex flex-col sm:flex-row gap-3">
+
+                                <div class="relative">
+
+                                    <span class="absolute left-3 top-1/2
+                                                 -translate-y-1/2 muted">
+                                        ⌕
+                                    </span>
+
+                                    <input
+                                        id="searchInput"
+                                        type="text"
+                                        placeholder="Search student..."
+                                        class="field w-full sm:w-64 rounded-lg
+                                               pl-9 pr-3 py-2.5 text-sm
+                                               outline-none">
+
+                                </div>
+
+
+                                <select
+                                    id="semesterFilter"
+                                    class="field rounded-lg px-3 py-2.5
+                                           text-sm outline-none">
+
+                                    <option value="ALL">
+                                        All Semesters
+                                    </option>
+
+                                    <option value="1">Semester 1</option>
+                                    <option value="2">Semester 2</option>
+                                    <option value="3">Semester 3</option>
+                                    <option value="4">Semester 4</option>
+                                    <option value="5">Semester 5</option>
+                                    <option value="6">Semester 6</option>
+                                    <option value="7">Semester 7</option>
+                                    <option value="8">Semester 8</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Table -->
+
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full">
+
+                            <thead class="table-head">
+
+                                <tr class="text-left text-xs
+                                           uppercase tracking-wider">
+
+                                    <th class="px-6 py-4">
+                                        Student
+                                    </th>
+
+                                    <th class="px-6 py-4">
+                                        Program
+                                    </th>
+
+                                    <th class="px-6 py-4">
+                                        Progress
+                                    </th>
+
+                                    <th class="px-6 py-4">
+                                        CGPA
+                                    </th>
+
+                                    <th class="px-6 py-4">
+                                        Profile
+                                    </th>
+
+                                    <th class="px-6 py-4 text-right">
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="studentTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- Empty -->
+
+                    <div id="emptyState"
+                         class="hidden py-16 text-center">
+
+                        <div class="text-4xl mb-4">
+                            👥
+                        </div>
+
+                        <h4 class="font-semibold ink">
+                            No students found
+                        </h4>
+
+                        <p class="muted text-sm mt-1">
+                            Try changing your search or filter.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================================================================
+     STUDENT DETAILS MODAL
+================================================================ -->
+
+<div id="studentModal"
+     class="hidden fixed inset-0 z-50 modal-backdrop
+            items-center justify-center p-4">
+
+    <div class="card w-full max-w-3xl max-h-[90vh]
+                overflow-y-auto rounded-2xl">
+
+
+        <!-- Modal Header -->
+
+        <div class="p-6 border-b divider
+                    flex items-start justify-between gap-4"
+             style="background: linear-gradient(180deg, var(--secondary), #FFFFFF)">
+
+            <div>
+
+                <p class="text-xs uppercase tracking-wider
+                          font-semibold" style="color: var(--purple)">
+                    Student Profile
+                </p>
+
+                <h3 id="modalStudentName"
+                    class="text-2xl font-bold mt-1" style="color: var(--purple-dark)">
+                    Student
+                </h3>
+
+                <p id="modalStudentEmail"
+                   class="text-sm muted mt-1">
+                </p>
+
+            </div>
+
+
+            <button
+                id="closeModalBtn"
+                class="btn-secondary w-9 h-9 rounded-lg">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- Modal Content -->
+
+        <div class="p-6 space-y-6">
+
+
+            <!-- Academic Summary -->
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+                <div class="tile rounded-lg p-4">
+
+                    <p class="text-xs muted">
+                        Program
+                    </p>
+
+                    <p id="modalProgram"
+                       class="text-sm font-semibold ink mt-1">
+                        —
+                    </p>
+
+                </div>
+
+
+                <div class="tile rounded-lg p-4">
+
+                    <p class="text-xs muted">
+                        Duration
+                    </p>
+
+                    <p id="modalDuration"
+                       class="text-sm font-semibold ink mt-1">
+                        —
+                    </p>
+
+                </div>
+
+
+                <div class="tile rounded-lg p-4">
+
+                    <p class="text-xs muted">
+                        CGPA
+                    </p>
+
+                    <p id="modalCgpa"
+                       class="text-sm font-semibold ink mt-1">
+                        —
+                    </p>
+
+                </div>
+
+
+                <div class="tile rounded-lg p-4">
+
+                    <p class="text-xs muted">
+                        Profile
+                    </p>
+
+                    <p id="modalProfileStatus"
+                       class="text-sm font-semibold ink mt-1">
+                        —
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Semester Progress -->
+
+            <div>
+
+                <div class="flex items-center justify-between mb-3">
+
+                    <div>
+
+                        <h4 class="font-semibold" style="color: var(--purple-dark)">
+                            Academic Progress
+                        </h4>
+
+                        <p id="modalAcademicYear"
+                           class="text-xs muted mt-1">
+                        </p>
+
+                    </div>
+
+                    <span id="modalSemester"
+                          class="semester-badge">
+                        Semester —
+                    </span>
+
+                </div>
+
+
+                <div class="progress-track">
+
+                    <div id="modalProgressBar"
+                         class="progress-fill"
+                         style="width: 0%">
+                    </div>
+
+                </div>
+
+
+                <div class="flex justify-between mt-2">
+
+                    <span class="text-xs muted">
+                        Semester 1
+                    </span>
+
+                    <span id="modalProgressText"
+                          class="text-xs font-semibold" style="color: var(--purple-dark)">
+                        0%
+                    </span>
+
+                    <span id="modalFinalSemester"
+                          class="text-xs muted">
+                        Final
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Skills -->
+
+            <div>
+
+                <h4 class="font-semibold mb-3" style="color: var(--purple-dark)">
+                    Skills
+                </h4>
+
+                <div id="modalSkills"
+                     class="flex flex-wrap gap-2">
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="pt-4 border-t divider
+                        flex flex-col sm:flex-row
+                        justify-end gap-3">
+
+                <button
+                    id="closeModalAction"
+                    class="btn-secondary px-5 py-2.5 rounded-lg
+                           text-sm font-medium">
+
+                    Close
+
+                </button>
+
+
+                <button
+                    id="promoteBtn"
+                    class="action-btn btn-primary px-5 py-2.5 rounded-lg
+                           text-sm font-semibold">
+
+                    Promote Student
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/mentorDashboard.js"></script>
+
+</body>
+</html>

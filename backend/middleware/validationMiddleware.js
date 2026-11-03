@@ -1,0 +1,1 @@
+exports.requireFields=(...fields)=>(req,res,next)=>{const missing=fields.filter(f=>req.body[f]===undefined||req.body[f]===''); return missing.length?res.status(400).json({message:`Missing: ${missing.join(', ')}`}):next();};

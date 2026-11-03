@@ -1,0 +1,1105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>CareerReady - Preparation</title>
+
+
+    <!-- =====================================================
+         TAILWIND CSS
+    ====================================================== -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <!-- =====================================================
+         PAGE STYLES
+    ====================================================== -->
+
+    <style>
+
+        body {
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37, 99, 235, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(59, 130, 246, 0.10),
+                    transparent 35%
+                ),
+                #020617;
+
+            min-height: 100vh;
+        }
+
+
+        .glass {
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+
+
+        .card {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30, 41, 59, 0.92),
+                    rgba(15, 23, 42, 0.92)
+                );
+
+            border: 1px solid rgba(96, 165, 250, 0.18);
+        }
+
+
+        .card:hover {
+            border-color: rgba(96, 165, 250, 0.35);
+            transition: 0.2s ease;
+        }
+
+
+        .ai-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30, 41, 59, 0.96),
+                    rgba(15, 23, 42, 0.96)
+                );
+
+            border: 1px solid rgba(59, 130, 246, 0.30);
+        }
+
+
+        .select-input {
+            width: 100%;
+            border-radius: 0.75rem;
+            border: 1px solid rgb(51 65 85);
+            background: rgb(30 41 59);
+            color: white;
+            padding: 0.75rem 1rem;
+            outline: none;
+        }
+
+
+        .select-input:focus {
+            border-color: rgb(59 130 246);
+            box-shadow:
+                0 0 0 2px
+                rgba(59, 130, 246, 0.15);
+        }
+
+
+        .select-input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+
+        /* AI formatted response */
+
+        .ai-response h2,
+        .ai-response h3,
+        .ai-response h4 {
+            color: white;
+            font-weight: 700;
+        }
+
+
+        .ai-response p {
+            margin-bottom: 0.75rem;
+        }
+
+
+        .ai-response ul {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            padding-left: 1.25rem;
+            list-style-type: disc;
+        }
+
+
+        .ai-response ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            padding-left: 1.25rem;
+            list-style-type: decimal;
+        }
+
+
+        .ai-response li {
+            margin-bottom: 0.5rem;
+        }
+
+
+        .ai-response strong {
+            color: white;
+            font-weight: 600;
+        }
+
+
+        .ai-response hr {
+            border-color: rgb(51 65 85);
+            margin: 1.25rem 0;
+        }
+
+
+        /* =====================================================
+           LAVENDER / PURPLE THEME
+           Visual-only overrides: keep page functionality intact.
+        ====================================================== */
+
+        body {
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(196, 181, 253, 0.48),
+                    transparent 36%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(221, 214, 254, 0.55),
+                    transparent 38%
+                ),
+                #f7f5ff;
+
+            color: #312e4b;
+        }
+
+
+        .glass {
+            background: rgba(255, 255, 255, 0.88);
+            border-color: #e5defa;
+            box-shadow: 0 8px 28px rgba(91, 72, 150, 0.06);
+        }
+
+
+        .card {
+            background: linear-gradient(135deg, #ffffff, #f8f6ff);
+            border-color: #e6defb;
+            box-shadow: 0 8px 24px rgba(91, 72, 150, 0.06);
+        }
+
+
+        .card:hover {
+            border-color: #c4b5fd;
+        }
+
+
+        .ai-card {
+            background: linear-gradient(135deg, #f3efff, #ffffff);
+            border-color: #d8ccff;
+            box-shadow: 0 10px 28px rgba(109, 75, 190, 0.08);
+        }
+
+
+        .select-input {
+            background: #ffffff;
+            color: #312e4b;
+            border-color: #d8d0ef;
+        }
+
+
+        .select-input:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
+        }
+
+
+        .ai-response h2,
+        .ai-response h3,
+        .ai-response h4,
+        .ai-response strong {
+            color: #35265f;
+        }
+
+
+        .ai-response hr {
+            border-color: #e5defa;
+        }
+
+
+        /* Tailwind color utilities used by this page */
+
+        .text-white {
+            color: #312e4b !important;
+        }
+
+        .text-blue-400,
+        .text-blue-300 {
+            color: #7650c8 !important;
+        }
+
+        .text-slate-300 {
+            color: #51496d !important;
+        }
+
+        .text-slate-400 {
+            color: #756d8e !important;
+        }
+
+        .text-slate-500,
+        .text-slate-600 {
+            color: #8a829f !important;
+        }
+
+        .text-purple-400 {
+            color: #8656d8 !important;
+        }
+
+        .text-emerald-400 {
+            color: #16866a !important;
+        }
+
+        .text-yellow-400 {
+            color: #a66b08 !important;
+        }
+
+
+        .bg-blue-600 {
+            background-color: #7950d8 !important;
+        }
+
+        .hover\:bg-blue-700:hover {
+            background-color: #6740c2 !important;
+        }
+
+        .bg-blue-500\/10 {
+            background-color: #eee8ff !important;
+        }
+
+        .border-blue-500\/20 {
+            border-color: #d8ccff !important;
+        }
+
+        .border-blue-500 {
+            border-color: #9b7be8 !important;
+        }
+
+        .bg-blue-400 {
+            background-color: #9875e8 !important;
+        }
+
+
+        .bg-emerald-500\/10 {
+            background-color: #e5f7f0 !important;
+        }
+
+        .border-emerald-500\/20 {
+            border-color: #bce8d7 !important;
+        }
+
+        .bg-purple-500\/10 {
+            background-color: #f0e9ff !important;
+        }
+
+        .border-purple-500\/20 {
+            border-color: #ddceff !important;
+        }
+
+
+        .bg-slate-900,
+        .bg-slate-900\/60,
+        .bg-slate-900\/70 {
+            background-color: #f5f2ff !important;
+        }
+
+
+        .bg-slate-800,
+        .bg-slate-800\/70,
+        .disabled\:bg-slate-700:disabled {
+            background-color: #e9e2fb !important;
+        }
+
+
+        .border-slate-700,
+        .border-slate-800 {
+            border-color: #e2daf5 !important;
+        }
+
+
+        .hover\:bg-slate-800:hover {
+            background-color: #eee8ff !important;
+        }
+
+        .hover\:text-white:hover {
+            color: #5b36a8 !important;
+        }
+
+
+        .bg-red-500\/10 {
+            background-color: #fff0f0 !important;
+        }
+
+        .border-red-500\/30 {
+            border-color: #f2caca !important;
+        }
+
+        .border-red-400\/40 {
+            border-color: #e9bcbc !important;
+        }
+
+        .text-red-300,
+        .text-red-400 {
+            color: #bd4545 !important;
+        }
+
+        .hover\:bg-red-500\/10:hover {
+            background-color: #ffe5e5 !important;
+        }
+
+
+        .primary-btn,
+        .bg-blue-600 {
+            color: #ffffff !important;
+        }
+
+        a.bg-blue-600,
+        button.bg-blue-600 {
+            color: #ffffff !important;
+        }
+
+
+        .border-t-transparent {
+            border-top-color: transparent !important;
+        }
+
+
+        #pageContent {
+            color: #312e4b;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="text-white">
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="glass sticky top-0 z-50">
+
+        <div class="max-w-7xl mx-auto px-6 py-4">
+
+            <div
+                class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+            >
+
+
+                <!-- BRAND -->
+
+                <div>
+
+                    <div class="text-2xl font-bold text-blue-400">
+                        CareerReady
+                    </div>
+
+                    <p class="text-xs text-slate-400">
+                        Placement Skill Matcher & Readiness Analyzer
+                    </p>
+
+                </div>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="flex flex-wrap items-center gap-2">
+
+
+                    <a
+                        href="./dashboard.html"
+                        class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition"
+                    >
+                        Dashboard
+                    </a>
+
+
+                    <a
+                        href="./profile.html"
+                        class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition"
+                    >
+                        My Profile
+                    </a>
+
+
+                    <a
+                        href="./drives.html"
+                        class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition"
+                    >
+                        Placement Drives
+                    </a>
+
+
+                    <a
+                        href="./applications.html"
+                        class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition"
+                    >
+                        Applications
+                    </a>
+
+
+                    <a
+                        href="./readiness.html"
+                        class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition"
+                    >
+                        Readiness
+                    </a>
+
+
+                    <a
+                        href="./preparation.html"
+                        class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold"
+                    >
+                        Preparation
+                    </a>
+
+
+                    <button
+                        id="logoutButton"
+                        type="button"
+                        class="px-4 py-2 rounded-lg border border-red-400/40 text-red-300 text-sm font-semibold hover:bg-red-500/10 transition"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+
+    <div
+        id="pageLoading"
+        class="min-h-[70vh] flex items-center justify-center"
+    >
+
+        <div class="text-center">
+
+            <div
+                class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"
+            ></div>
+
+            <p class="text-slate-400 mt-4">
+                Loading your preparation plan...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ERROR
+    ====================================================== -->
+
+    <div
+        id="pageError"
+        class="hidden max-w-3xl mx-auto px-6 py-16"
+    >
+
+        <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-8">
+
+            <h2 class="text-xl font-bold text-red-400">
+                Unable to load preparation plan
+            </h2>
+
+            <p
+                id="pageErrorMessage"
+                class="text-red-300 mt-3"
+            >
+                Something went wrong.
+            </p>
+
+            <button
+                onclick="location.reload()"
+                class="mt-6 px-5 py-2 rounded-lg bg-red-500 hover:bg-red-600 font-semibold"
+            >
+                Try Again
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main
+        id="pageContent"
+        class="hidden max-w-7xl mx-auto px-6 py-10"
+    >
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <section class="mb-10">
+
+            <p class="text-blue-400 font-semibold uppercase tracking-widest text-sm">
+                Student Preparation
+            </p>
+
+            <h1 class="text-4xl md:text-5xl font-bold mt-2">
+                Prepare for Placement
+            </h1>
+
+            <p class="text-slate-400 mt-3 text-lg">
+                Improve your placement readiness using your skill gaps,
+                assessment results and AI-powered recommendations.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+        ================================================== -->
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+
+            <!-- READINESS -->
+
+            <div class="card rounded-2xl p-7">
+
+                <p class="text-blue-400 font-semibold">
+                    Readiness Score
+                </p>
+
+                <div class="flex items-end gap-2 mt-3">
+
+                    <h2
+                        id="readinessScore"
+                        class="text-5xl font-bold"
+                    >
+                        --
+                    </h2>
+
+                    <span class="text-slate-400 mb-2">
+                        / 100
+                    </span>
+
+                </div>
+
+                <p
+                    id="readinessLevel"
+                    class="text-blue-400 font-semibold mt-2"
+                >
+                    --
+                </p>
+
+            </div>
+
+
+
+            <!-- OVERALL ROLE MATCH -->
+
+            <div class="card rounded-2xl p-7">
+
+                <p class="text-emerald-400 font-semibold">
+                    Overall Role Match
+                </p>
+
+                <div class="flex items-end gap-2 mt-3">
+
+                    <h2
+                        id="skillMatch"
+                        class="text-5xl font-bold"
+                    >
+                        --
+                    </h2>
+
+                    <span class="text-slate-400 mb-2">
+                        %
+                    </span>
+
+                </div>
+
+                <p class="text-slate-400 mt-2">
+                    Average match across recommended roles
+                </p>
+
+            </div>
+
+
+
+            <!-- TASKS -->
+
+            <div class="card rounded-2xl p-7">
+
+                <p class="text-yellow-400 font-semibold">
+                    Preparation Tasks
+                </p>
+
+                <h2
+                    id="taskCount"
+                    class="text-5xl font-bold mt-3"
+                >
+                    --
+                </h2>
+
+                <p class="text-slate-400 mt-2">
+                    Recommended actions
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             AI PREPARATION ASSISTANT
+        ================================================== -->
+
+        <section class="ai-card rounded-2xl p-8 mb-8">
+
+
+            <!-- HEADER -->
+
+            <div>
+
+                <span
+                    class="inline-flex items-center gap-2 rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-400"
+                >
+
+                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+
+                    AI POWERED
+
+                </span>
+
+
+                <h2 class="text-2xl font-bold mt-4">
+                    AI Preparation Assistant
+                </h2>
+
+
+                <p class="text-slate-400 mt-2 max-w-3xl">
+
+                    Select a recruitment role to receive personalized
+                    preparation advice based on your actual skills,
+                    readiness score and role-specific skill gaps.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- SELECTORS -->
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-7">
+
+
+                <!-- DRIVE -->
+
+                <div>
+
+                    <label
+                        for="aiDriveSelect"
+                        class="block text-sm font-medium text-slate-300 mb-2"
+                    >
+                        Recruitment Drive
+                    </label>
+
+                    <select
+                        id="aiDriveSelect"
+                        class="select-input"
+                    >
+
+                        <option value="">
+                            Select recruitment drive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ROLE -->
+
+                <div>
+
+                    <label
+                        for="aiRoleSelect"
+                        class="block text-sm font-medium text-slate-300 mb-2"
+                    >
+                        Target Role
+                    </label>
+
+                    <select
+                        id="aiRoleSelect"
+                        disabled
+                        class="select-input"
+                    >
+
+                        <option value="">
+                            Select target role
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <div class="flex items-end">
+
+                    <button
+                        id="generateAiButton"
+                        type="button"
+                        disabled
+                        class="w-full px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-700 disabled:text-slate-500 text-white font-semibold transition"
+                    >
+                        Generate AI Preparation
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ERROR -->
+
+            <div
+                id="aiError"
+                class="hidden mt-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-4 text-sm text-red-300"
+            ></div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="aiLoading"
+                class="hidden mt-6 rounded-xl border border-blue-500/20 bg-slate-900/60 p-5"
+            >
+
+                <div class="flex items-center gap-3">
+
+                    <div
+                        class="w-5 h-5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"
+                    ></div>
+
+                    <p class="text-sm text-slate-300">
+                        AI is preparing your personalized plan...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AI RESULT -->
+
+            <div
+                id="aiResult"
+                class="hidden mt-6"
+            >
+
+                <div
+                    class="rounded-2xl border border-slate-700 bg-slate-900/70 p-6"
+                >
+
+
+                    <!-- RESULT HEADER -->
+
+                    <div
+                        class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5"
+                    >
+
+
+                        <div>
+
+                            <p class="text-xs uppercase tracking-widest text-slate-500">
+                                Target Role
+                            </p>
+
+                            <h3
+                                id="aiTargetRole"
+                                class="text-2xl font-bold text-white mt-1"
+                            >
+                                --
+                            </h3>
+
+                            <p
+                                id="aiCompany"
+                                class="text-slate-400 mt-1"
+                            >
+                                --
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- SCORES -->
+
+                        <div class="flex flex-wrap gap-3">
+
+
+                            <!-- READINESS -->
+
+                            <div
+                                class="min-w-[130px] rounded-xl bg-blue-500/10 border border-blue-500/20 px-4 py-3"
+                            >
+
+                                <p class="text-xs text-blue-400">
+                                    Readiness
+                                </p>
+
+                                <p
+                                    id="aiReadinessScore"
+                                    class="text-xl font-bold mt-1"
+                                >
+                                    --
+                                </p>
+
+                            </div>
+
+
+
+                            <!-- ROLE SKILL MATCH -->
+
+                            <div
+                                class="min-w-[130px] rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3"
+                            >
+
+                                <p class="text-xs text-emerald-400">
+                                    Role Skill Match
+                                </p>
+
+                                <p
+                                    id="aiSkillMatch"
+                                    class="text-xl font-bold mt-1"
+                                >
+                                    --
+                                </p>
+
+                            </div>
+
+
+
+                            <!-- READINESS LEVEL -->
+
+                            <div
+                                class="min-w-[130px] rounded-xl bg-purple-500/10 border border-purple-500/20 px-4 py-3"
+                            >
+
+                                <p class="text-xs text-purple-400">
+                                    Readiness Level
+                                </p>
+
+                                <p
+                                    id="aiReadinessLevel"
+                                    class="text-sm font-bold mt-2"
+                                >
+                                    --
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- MISSING SKILLS -->
+
+                    <div
+                        id="aiMissingSkillsSection"
+                        class="hidden border-t border-slate-800 mt-6 pt-6"
+                    >
+
+                        <h4 class="font-semibold text-white">
+                            Priority Skill Gaps
+                        </h4>
+
+                        <p class="text-sm text-slate-500 mt-1">
+                            Skills required for this specific role that are
+                            currently missing from your profile.
+                        </p>
+
+                        <div
+                            id="aiMissingSkills"
+                            class="flex flex-wrap gap-2 mt-4"
+                        ></div>
+
+                    </div>
+
+
+
+                    <!-- AI ADVICE -->
+
+                    <div
+                        class="border-t border-slate-800 mt-6 pt-6"
+                    >
+
+                        <h4 class="font-semibold text-white mb-4">
+                            Personalized Preparation Plan
+                        </h4>
+
+                        <div
+                            id="aiAdvice"
+                            class="ai-response text-sm text-slate-300 leading-7"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PREPARATION CHECKLIST
+        ================================================== -->
+
+        <section class="card rounded-2xl p-8 mb-8">
+
+
+            <div class="mb-6">
+
+                <p class="text-blue-400 text-sm font-semibold uppercase tracking-widest">
+                    Action Plan
+                </p>
+
+                <h2 class="text-2xl font-bold mt-2">
+                    Preparation Checklist
+                </h2>
+
+                <p class="text-slate-400 mt-1">
+                    Suggested actions to improve your placement readiness.
+                </p>
+
+            </div>
+
+
+            <div
+                id="preparationChecklist"
+                class="space-y-3"
+            >
+
+                <div
+                    class="rounded-2xl border border-slate-800 bg-slate-900 p-6"
+                >
+
+                    <p class="text-slate-400">
+                        Loading preparation checklist...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROFILE ACTION
+        ================================================== -->
+
+        <section
+            class="glass rounded-2xl p-8 text-center mb-8"
+        >
+
+            <h2 class="text-2xl font-bold">
+                Keep Your Profile Updated
+            </h2>
+
+
+            <p class="text-slate-400 mt-2 max-w-2xl mx-auto">
+
+                Add your latest skills, certifications, projects and
+                experience to improve your placement matching and
+                readiness analysis.
+
+            </p>
+
+
+            <a
+                href="./profile.html"
+                class="inline-block mt-6 px-7 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 font-semibold transition"
+            >
+                Go to My Profile →
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="border-t border-slate-800 mt-12">
+
+        <div class="max-w-7xl mx-auto px-6 py-6 text-center">
+
+            <p class="text-slate-500 text-sm">
+                CareerReady © 2026
+            </p>
+
+            <p class="text-slate-600 text-xs mt-1">
+                Placement Skill Matcher and Readiness Analyzer
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/studentPreparation.js"></script>
+
+
+</body>
+</html>

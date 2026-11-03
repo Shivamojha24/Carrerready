@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | CareerReady</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            background: #0f172a;
+        }
+
+        .nav-item {
+            transition: 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+        }
+
+        .nav-item.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .report-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+        }
+
+        @media print {
+
+            .sidebar,
+            .no-print,
+            #loadingState,
+            #errorMessage {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+            }
+
+            main {
+                width: 100% !important;
+            }
+
+            .report-card {
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+
+            .print-header {
+                display: block !important;
+            }
+        }
+
+        .print-header {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="min-h-screen flex">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar w-72 min-h-screen text-white hidden lg:flex flex-col">
+
+        <div class="px-6 py-6 border-b border-slate-800">
+
+            <h1 class="text-2xl font-black">
+                Career<span class="text-blue-400">Ready</span>
+            </h1>
+
+            <p class="text-sm text-slate-400 mt-1">
+                Placement Management
+            </p>
+
+        </div>
+
+
+        <nav class="flex-1 p-4 space-y-2">
+
+            <a href="./dashboard.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Dashboard
+            </a>
+
+            <a href="./students.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Students
+            </a>
+
+            <a href="./verification.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Verification
+            </a>
+
+            <a href="./drives.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Recruitment Drives
+            </a>
+
+            <a href="./applications.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Applications
+            </a>
+
+            <a href="./analytics.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Analytics
+            </a>
+
+            <a href="./reports.html"
+               class="nav-item active block rounded-xl px-4 py-3 font-semibold">
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="p-4 border-t border-slate-800">
+
+            <button
+                id="logoutButton"
+                class="w-full rounded-xl bg-slate-800 hover:bg-slate-700 py-3 font-semibold">
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="flex-1 min-w-0">
+
+        <header class="bg-white border-b border-slate-200">
+
+            <div class="px-6 lg:px-10 py-6">
+
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                    <div>
+
+                        <p class="text-sm text-blue-600 font-semibold">
+                            Placement Management
+                        </p>
+
+                        <h2 class="text-3xl font-bold mt-1">
+                            Placement Reports
+                        </h2>
+
+                        <p class="text-slate-500 mt-2">
+                            Generate a consolidated placement and student readiness report.
+                        </p>
+
+                    </div>
+
+
+                    <div class="flex gap-3 no-print">
+
+                        <button
+                            id="refreshButton"
+                            class="px-5 py-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-semibold">
+                            ↻ Refresh
+                        </button>
+
+
+                        <button
+                            id="printButton"
+                            class="px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                            Print / Save PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div class="p-6 lg:p-10">
+
+            <!-- ERROR -->
+
+            <div
+                id="errorMessage"
+                class="hidden mb-6 rounded-xl bg-red-50 border border-red-200 text-red-700 px-5 py-4">
+            </div>
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loadingState"
+                class="bg-white border border-slate-200 rounded-2xl p-12 text-center">
+
+                <div class="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
+
+                <p class="text-slate-500 mt-4">
+                    Generating placement report...
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 REPORT
+            ================================================== -->
+
+            <div id="reportContent" class="hidden">
+
+                <!-- PRINT HEADER -->
+
+                <div class="print-header mb-8">
+
+                    <h1 class="text-3xl font-bold">
+                        CareerReady
+                    </h1>
+
+                    <p class="text-lg font-semibold mt-1">
+                        Placement Cell Report
+                    </p>
+
+                    <p
+                        id="reportDate"
+                        class="text-sm text-slate-500 mt-2">
+                    </p>
+
+                </div>
+
+
+                <!-- REPORT TITLE -->
+
+                <div class="report-card p-6 mb-6">
+
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                        <div>
+
+                            <h3 class="text-xl font-bold">
+                                Placement Overview
+                            </h3>
+
+                            <p class="text-sm text-slate-500 mt-1">
+                                Consolidated statistics from the CareerReady placement system.
+                            </p>
+
+                        </div>
+
+
+                        <div class="text-sm text-slate-500">
+
+                            Report generated:
+                            <span
+                                id="generatedDate"
+                                class="font-semibold text-slate-700">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     STUDENT SUMMARY
+                ================================================== -->
+
+                <div class="mb-6">
+
+                    <h3 class="text-lg font-bold mb-4">
+                        Student Summary
+                    </h3>
+
+
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+                        <div class="report-card p-5">
+
+                            <p class="text-sm text-slate-500">
+                                Total Students
+                            </p>
+
+                            <p
+                                id="totalStudents"
+                                class="text-3xl font-bold mt-2">
+                                --
+                            </p>
+
+                        </div>
+
+
+                        <div class="report-card p-5">
+
+                            <p class="text-sm text-slate-500">
+                                Verified Profiles
+                            </p>
+
+                            <p
+                                id="verifiedStudents"
+                                class="text-3xl font-bold text-emerald-600 mt-2">
+                                --
+                            </p>
+
+                        </div>
+
+
+                        <div class="report-card p-5">
+
+                            <p class="text-sm text-slate-500">
+                                Average CGPA
+                            </p>
+
+                            <p
+                                id="averageCgpa"
+                                class="text-3xl font-bold text-blue-600 mt-2">
+                                --
+                            </p>
+
+                        </div>
+
+
+                        <div class="report-card p-5">
+
+                            <p class="text-sm text-slate-500">
+                                Average Readiness
+                            </p>
+
+                            <p
+                                id="averageReadiness"
+                                class="text-3xl font-bold text-indigo-600 mt-2">
+                                --
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     READINESS SUMMARY
+                ================================================== -->
+
+                <div class="report-card p-6 mb-6">
+
+                    <h3 class="text-lg font-bold">
+                        Readiness Summary
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mt-1 mb-6">
+                        Current placement readiness of assessed students.
+                    </p>
+
+
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+
+                        <div class="bg-emerald-50 rounded-xl p-5">
+
+                            <p class="text-sm text-emerald-700">
+                                Highly Ready
+                            </p>
+
+                            <p
+                                id="highlyReady"
+                                class="text-3xl font-bold text-emerald-700 mt-2">
+                                0
+                            </p>
+
+                        </div>
+
+
+                        <div class="bg-blue-50 rounded-xl p-5">
+
+                            <p class="text-sm text-blue-700">
+                                Moderately Ready
+                            </p>
+
+                            <p
+                                id="moderatelyReady"
+                                class="text-3xl font-bold text-blue-700 mt-2">
+                                0
+                            </p>
+
+                        </div>
+
+
+                        <div class="bg-amber-50 rounded-xl p-5">
+
+                            <p class="text-sm text-amber-700">
+                                Needs Preparation
+                            </p>
+
+                            <p
+                                id="needsPreparation"
+                                class="text-3xl font-bold text-amber-700 mt-2">
+                                0
+                            </p>
+
+                        </div>
+
+
+                        <div class="bg-red-50 rounded-xl p-5">
+
+                            <p class="text-sm text-red-700">
+                                Not Ready
+                            </p>
+
+                            <p
+                                id="notReady"
+                                class="text-3xl font-bold text-red-700 mt-2">
+                                0
+                            </p>
+
+                        </div>
+
+
+                        <div class="bg-slate-100 rounded-xl p-5">
+
+                            <p class="text-sm text-slate-600">
+                                Not Assessed
+                            </p>
+
+                            <p
+                                id="notAssessed"
+                                class="text-3xl font-bold text-slate-700 mt-2">
+                                0
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     APPLICATION SUMMARY
+                ================================================== -->
+
+                <div class="report-card p-6 mb-6">
+
+                    <h3 class="text-lg font-bold">
+                        Recruitment Application Summary
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mt-1 mb-6">
+                        Current application pipeline across recruitment drives.
+                    </p>
+
+
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full text-sm">
+
+                            <thead>
+
+                                <tr class="border-b border-slate-200 text-left">
+
+                                    <th class="py-3 pr-4">
+                                        Status
+                                    </th>
+
+                                    <th class="py-3 px-4">
+                                        Applications
+                                    </th>
+
+                                    <th class="py-3 pl-4">
+                                        Share
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="applicationTable">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DRIVE SUMMARY
+                ================================================== -->
+
+                <div class="report-card p-6 mb-6">
+
+                    <div class="flex items-center justify-between mb-5">
+
+                        <div>
+
+                            <h3 class="text-lg font-bold">
+                                Recruitment Drives
+                            </h3>
+
+                            <p class="text-sm text-slate-500 mt-1">
+                                Current recruitment opportunities managed by the Placement Cell.
+                            </p>
+
+                        </div>
+
+                        <p
+                            id="totalDrives"
+                            class="text-3xl font-bold text-blue-600">
+                            0
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="driveList"
+                        class="space-y-3">
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     REPORT SUMMARY
+                ================================================== -->
+
+                <div class="report-card p-6">
+
+                    <h3 class="text-lg font-bold">
+                        Placement Cell Summary
+                    </h3>
+
+                    <div class="mt-4 space-y-3 text-sm text-slate-600">
+
+                        <p>
+                            • The report consolidates student profile verification,
+                            readiness assessment and recruitment application data.
+                        </p>
+
+                        <p>
+                            • Readiness classification is based on the CareerReady
+                            readiness scoring system.
+                        </p>
+
+                        <p>
+                            • Application statistics represent the current status
+                            of applications stored in the system.
+                        </p>
+
+                        <p>
+                            • Recruitment drive information reflects drives currently
+                            available in the Placement Cell system.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/placementReports.js"></script>
+
+</body>
+</html>

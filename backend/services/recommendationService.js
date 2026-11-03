@@ -1,0 +1,1 @@
+exports.plan=match=>match.missing.map(skill=>({title:`Practice ${skill}`,category:'Skill gap',completed:false})).concat([{title:'Complete an aptitude mock test',category:'Assessment',completed:false},{title:'Schedule a mock interview',category:'Interview',completed:false}]);

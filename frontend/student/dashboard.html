@@ -1,0 +1,1769 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>CareerReady | Student Dashboard</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        radial-gradient(
+          circle at 5% 5%,
+          rgba(37, 99, 235, 0.18),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 95% 25%,
+          rgba(6, 182, 212, 0.10),
+          transparent 25%
+        ),
+        #020617;
+
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .card {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(30, 41, 59, 0.90),
+          rgba(15, 23, 42, 0.96)
+        );
+
+      border: 1px solid rgba(96, 165, 250, 0.14);
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(96, 165, 250, 0.30);
+    }
+
+    .soft-box {
+      background: rgba(2, 6, 23, 0.45);
+      border: 1px solid rgba(148, 163, 184, 0.10);
+    }
+
+    .gradient-text {
+      background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #22d3ee
+      );
+
+      background-clip: text;
+      -webkit-background-clip: text;
+
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .primary-btn {
+      background: linear-gradient(
+        135deg,
+        #2563eb,
+        #0891b2
+      );
+
+      transition: all 0.2s ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 10px 30px rgba(37, 99, 235, 0.22);
+    }
+
+    .section-label {
+      letter-spacing: 0.18em;
+    }
+
+    .status-dot {
+      box-shadow:
+        0 0 12px rgba(52, 211, 153, 0.65);
+    }
+
+    /* =====================================================
+       COLOR-ONLY UPDATE: PURPLE & LAVENDER THEME
+       Layout and functionality remain unchanged.
+       ===================================================== */
+
+    body,
+    body.text-white {
+      background:
+        radial-gradient(
+          circle at 5% 5%,
+          rgba(168, 85, 247, 0.12),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 95% 25%,
+          rgba(196, 181, 253, 0.18),
+          transparent 25%
+        ),
+        #f7f3ff !important;
+
+      color: #29213b !important;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.94) !important;
+      border-bottom-color: #e9ddff !important;
+    }
+
+    .card {
+      background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #fcfaff 100%
+      ) !important;
+
+      border-color: #e7dcfa !important;
+    }
+
+    .card:hover {
+      border-color: #c4a7f7 !important;
+    }
+
+    .soft-box {
+      background: #f6f0ff !important;
+      border-color: #e5d7fb !important;
+    }
+
+    .gradient-text {
+      background: linear-gradient(
+        90deg,
+        #9333ea,
+        #7c3aed,
+        #a855f7
+      ) !important;
+
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
+    .primary-btn {
+      background: linear-gradient(
+        135deg,
+        #9333ea,
+        #7c3aed
+      ) !important;
+
+      color: #ffffff !important;
+    }
+
+    .primary-btn:hover {
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.22) !important;
+    }
+
+    /* Text colours used by Tailwind classes */
+    .text-white,
+    .text-slate-100,
+    .text-slate-200,
+    .text-slate-300 {
+      color: #29213b !important;
+    }
+
+    .text-slate-400,
+    .text-slate-500 {
+      color: #756b88 !important;
+    }
+
+    .text-slate-700 {
+      color: #6b607e !important;
+    }
+
+    .text-blue-300,
+    .text-blue-400,
+    .text-cyan-300,
+    .text-cyan-400,
+    .text-violet-300,
+    .text-violet-400 {
+      color: #7c3aed !important;
+    }
+
+    /* Keep primary button text white */
+    .primary-btn,
+    .primary-btn .text-white {
+      color: #ffffff !important;
+    }
+
+    /* Soft light backgrounds for previously dark panels */
+    .bg-slate-950,
+    .bg-slate-900,
+    .bg-slate-800,
+    .bg-slate-800\/70,
+    .bg-slate-900\/60 {
+      background-color: #ffffff !important;
+    }
+
+    .bg-blue-500\/10,
+    .bg-blue-600\/15,
+    .bg-cyan-500\/10,
+    .bg-cyan-500\/5,
+    .bg-violet-500\/10 {
+      background-color: #f0e7ff !important;
+    }
+
+    .bg-blue-500,
+    .bg-blue-600,
+    .bg-cyan-400,
+    .bg-blue-400,
+    .bg-violet-400 {
+      background-color: #8b5cf6 !important;
+    }
+
+    /* Borders */
+    .border-slate-700,
+    .border-slate-800,
+    .border-slate-800\/70 {
+      border-color: #e7dcf8 !important;
+    }
+
+    .border-blue-500\/20,
+    .border-blue-500\/25,
+    .border-cyan-500\/20,
+    .border-cyan-500\/25 {
+      border-color: #d8c3fa !important;
+    }
+
+    /* Logo gradient */
+    .bg-gradient-to-br {
+      background-image: linear-gradient(
+        135deg,
+        #a855f7,
+        #7c3aed
+      ) !important;
+    }
+
+    /* Preserve semantic status colours */
+    .text-emerald-400,
+    .text-emerald-300 {
+      color: #047857 !important;
+    }
+
+    .text-red-300,
+    .text-red-400 {
+      color: #b91c1c !important;
+    }
+
+    /* Loading spinner */
+    .border-blue-500\/30 {
+      border-color: #ddd0fa !important;
+    }
+
+    .border-t-blue-400 {
+      border-top-color: #8b5cf6 !important;
+    }
+
+  </style>
+
+</head>
+
+
+<body class="text-white">
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================== -->
+
+<nav class="glass sticky top-0 z-50">
+
+  <div
+    class="max-w-7xl mx-auto
+           px-5 sm:px-6
+           py-4">
+
+    <div
+      class="flex flex-col
+             lg:flex-row
+             lg:items-center
+             lg:justify-between
+             gap-4">
+
+
+      <!-- BRAND -->
+
+      <div class="flex items-center gap-3">
+
+        <div
+          class="w-11 h-11
+                 rounded-xl
+                 bg-gradient-to-br
+                 from-blue-500
+                 to-cyan-400
+                 flex items-center
+                 justify-center">
+
+          <span class="font-black">
+            CR
+          </span>
+
+        </div>
+
+        <div>
+
+          <div class="text-xl font-black">
+            Career<span class="text-cyan-400">Ready</span>
+          </div>
+
+          <p class="text-[11px] text-slate-500">
+            Student Portal
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+
+      <div
+        class="flex flex-wrap
+               items-center
+               gap-2">
+
+
+        <a
+          href="./dashboard.html"
+          class="px-4 py-2.5
+                 rounded-xl
+                 bg-blue-600/15
+                 border border-blue-500/25
+                 text-blue-300
+                 font-semibold text-sm">
+
+          Dashboard
+
+        </a>
+
+
+        <a
+          href="./profile.html"
+          class="px-4 py-2.5
+                 rounded-xl
+                 bg-slate-800/70
+                 border border-slate-700
+                 text-slate-200
+                 font-semibold text-sm
+                 hover:border-blue-500/40
+                 transition">
+
+          My Profile
+
+        </a>
+
+
+        <!-- ALWAYS AVAILABLE -->
+
+        <a
+          href="./roadmap.html"
+          class="px-4 py-2.5
+                 rounded-xl
+                 bg-cyan-500/10
+                 border border-cyan-500/25
+                 text-cyan-300
+                 font-semibold text-sm
+                 hover:bg-cyan-500/15
+                 transition">
+
+          Career Roadmap
+
+        </a>
+
+
+        <!-- PLACEMENT NAVIGATION
+             JavaScript controls visibility -->
+
+        <a
+          id="placementDrivesNav"
+          href="./drives.html"
+          class="hidden px-4 py-2.5
+                 rounded-xl
+                 bg-slate-800/70
+                 border border-slate-700
+                 text-slate-200
+                 font-semibold text-sm">
+
+          Placement Drives
+
+        </a>
+
+
+        <a
+          id="applicationsNav"
+          href="./applications.html"
+          class="hidden px-4 py-2.5
+                 rounded-xl
+                 bg-slate-800/70
+                 border border-slate-700
+                 text-slate-200
+                 font-semibold text-sm">
+
+          Applications
+
+        </a>
+
+
+        <a
+          href="./readiness.html"
+          class="px-4 py-2.5
+                 rounded-xl
+                 bg-slate-800/70
+                 border border-slate-700
+                 text-slate-200
+                 font-semibold text-sm">
+
+          Readiness
+
+        </a>
+
+
+        <a
+          id="preparationNav"
+          href="./preparation.html"
+          class="hidden px-4 py-2.5
+                 rounded-xl
+                 bg-slate-800/70
+                 border border-slate-700
+                 text-slate-200
+                 font-semibold text-sm">
+
+          Preparation
+
+        </a>
+
+
+        <button
+          id="logoutButton"
+          type="button"
+          class="px-4 py-2.5
+                 rounded-xl
+                 border border-red-500/25
+                 bg-red-500/5
+                 text-red-300
+                 font-semibold text-sm">
+
+          Logout
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     LOADING
+========================================================== -->
+
+<div
+  id="dashboardLoading"
+  class="min-h-[75vh]
+         flex items-center
+         justify-center">
+
+  <div class="text-center">
+
+    <div
+      class="w-14 h-14
+             border-4
+             border-blue-500/30
+             border-t-blue-400
+             rounded-full
+             animate-spin
+             mx-auto">
+    </div>
+
+    <p class="text-slate-400 mt-5">
+      Loading your CareerReady dashboard...
+    </p>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ERROR
+========================================================== -->
+
+<div
+  id="dashboardError"
+  class="hidden
+         max-w-3xl
+         mx-auto
+         px-6
+         py-16">
+
+  <div
+    class="rounded-3xl
+           border border-red-500/25
+           bg-red-500/10
+           p-8">
+
+    <h2
+      class="text-xl
+             font-bold
+             text-red-300">
+
+      Unable to load dashboard
+
+    </h2>
+
+    <p
+      id="dashboardErrorMessage"
+      class="text-red-300/80 mt-3">
+
+      Something went wrong.
+
+    </p>
+
+    <button
+      onclick="location.reload()"
+      class="mt-6
+             px-5 py-2.5
+             rounded-xl
+             bg-red-500
+             hover:bg-red-400
+             font-semibold">
+
+      Try Again
+
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN DASHBOARD
+========================================================== -->
+
+<main
+  id="dashboardContent"
+  class="hidden
+         max-w-7xl
+         mx-auto
+         px-5 sm:px-6
+         py-10">
+
+
+  <!-- =======================================================
+       HERO
+  ======================================================== -->
+
+  <section class="mb-10">
+
+    <div
+      class="flex flex-col
+             lg:flex-row
+             lg:items-end
+             lg:justify-between
+             gap-6">
+
+      <div>
+
+        <div
+          id="journeyLabel"
+          class="flex
+                 items-center
+                 gap-2
+                 mb-4">
+
+          <span
+            class="status-dot
+                   w-2.5 h-2.5
+                   rounded-full
+                   bg-emerald-400">
+          </span>
+
+          <span
+            id="journeyLabelText"
+            class="text-emerald-400
+                   text-xs
+                   font-bold
+                   uppercase
+                   section-label">
+
+            Academic Journey Active
+
+          </span>
+
+        </div>
+
+
+        <p
+          class="text-blue-400
+                 font-semibold
+                 uppercase
+                 section-label
+                 text-xs">
+
+          Student Dashboard
+
+        </p>
+
+
+        <h1
+          class="text-4xl md:text-5xl
+                 font-black
+                 tracking-tight
+                 mt-2">
+
+          Welcome back,
+
+          <span
+            id="welcomeName"
+            class="gradient-text">
+
+            Student
+
+          </span>
+
+        </h1>
+
+
+        <p
+          id="heroDescription"
+          class="text-slate-400
+                 mt-4
+                 text-base md:text-lg
+                 max-w-3xl">
+
+          Build your academic foundation and follow your
+          personalized career roadmap.
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       ACADEMIC JOURNEY
+  ======================================================== -->
+
+  <section
+    class="card
+           rounded-3xl
+           p-6 md:p-8
+           mb-8">
+
+    <div
+      class="flex flex-col
+             lg:flex-row
+             lg:items-center
+             lg:justify-between
+             gap-6">
+
+
+      <div>
+
+        <div
+          class="flex items-center
+                 gap-2 mb-2">
+
+          <span
+            class="w-2 h-2
+                   rounded-full
+                   bg-cyan-400">
+          </span>
+
+          <span
+            class="text-cyan-400
+                   text-xs
+                   font-bold
+                   uppercase
+                   section-label">
+
+            Academic Journey
+
+          </span>
+
+        </div>
+
+
+        <h2
+          id="stageTitle"
+          class="text-2xl
+                 md:text-3xl
+                 font-black">
+
+          Foundation & Exploration
+
+        </h2>
+
+
+        <p
+          id="stageDescription"
+          class="text-slate-400
+                 mt-2
+                 max-w-2xl">
+
+          Build your programming and problem-solving foundation.
+
+        </p>
+
+      </div>
+
+
+      <div
+        class="grid grid-cols-2
+               md:grid-cols-3
+               gap-3">
+
+
+        <div
+          class="soft-box
+                 rounded-2xl
+                 px-5 py-4">
+
+          <p
+            class="text-xs
+                   text-slate-500">
+
+            Academic Year
+
+          </p>
+
+          <p
+            id="academicYear"
+            class="text-lg
+                   font-bold
+                   mt-1">
+
+            Year 1
+
+          </p>
+
+        </div>
+
+
+        <div
+          class="soft-box
+                 rounded-2xl
+                 px-5 py-4">
+
+          <p
+            class="text-xs
+                   text-slate-500">
+
+            Semester
+
+          </p>
+
+          <p
+            id="currentSemester"
+            class="text-lg
+                   font-bold
+                   mt-1">
+
+            Semester 2
+
+          </p>
+
+        </div>
+
+
+        <div
+          class="soft-box
+                 rounded-2xl
+                 px-5 py-4
+                 col-span-2
+                 md:col-span-1">
+
+          <p
+            class="text-xs
+                   text-slate-500">
+
+            Program
+
+          </p>
+
+          <p
+            id="programDuration"
+            class="text-lg
+                   font-bold
+                   mt-1">
+
+            4 Years
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Early stage message -->
+
+    <div
+      id="foundationMessage"
+      class="hidden
+             mt-6
+             rounded-2xl
+             border border-cyan-500/20
+             bg-cyan-500/5
+             p-5">
+
+      <p
+        class="font-semibold
+               text-cyan-300">
+
+        Placement is not your immediate focus.
+
+      </p>
+
+      <p
+        class="text-slate-400
+               text-sm
+               mt-2
+               leading-6">
+
+        Use this stage to strengthen your programming,
+        web development, databases, Git, DSA and projects.
+        Your Career Roadmap will guide you step by step.
+
+      </p>
+
+    </div>
+
+
+    <!-- Placement unlocked message -->
+
+    <div
+      id="placementUnlockedMessage"
+      class="hidden
+             mt-6
+             rounded-2xl
+             border border-emerald-500/20
+             bg-emerald-500/5
+             p-5">
+
+      <p
+        class="font-semibold
+               text-emerald-300">
+
+        Placement opportunities are now available.
+
+      </p>
+
+      <p
+        class="text-slate-400
+               text-sm
+               mt-2">
+
+        You can now explore recruitment drives,
+        role matching and placement preparation.
+
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       SUMMARY CARDS
+  ======================================================== -->
+
+  <section
+    class="grid
+           grid-cols-1
+           sm:grid-cols-2
+           xl:grid-cols-3
+           gap-5
+           mb-8">
+
+
+    <!-- READINESS -->
+
+    <div class="card rounded-3xl p-6">
+
+      <div
+        class="flex
+               items-center
+               justify-between">
+
+        <p class="text-sm text-slate-400">
+          Readiness Score
+        </p>
+
+        <div
+          class="w-10 h-10
+                 rounded-xl
+                 bg-blue-500/10
+                 border border-blue-500/20
+                 flex items-center
+                 justify-center">
+
+          🎯
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="flex
+               items-end
+               gap-2
+               mt-5">
+
+        <h2
+          id="readinessScore"
+          class="text-5xl
+                 font-black">
+
+          --
+
+        </h2>
+
+        <span
+          class="text-slate-500
+                 mb-2">
+
+          / 100
+
+        </span>
+
+      </div>
+
+
+      <p
+        id="readinessLevel"
+        class="text-blue-400
+               font-semibold
+               mt-2">
+
+        Not Assessed
+
+      </p>
+
+    </div>
+
+
+
+    <!-- PROFILE -->
+
+    <div class="card rounded-3xl p-6">
+
+      <div
+        class="flex
+               items-center
+               justify-between">
+
+        <p class="text-sm text-slate-400">
+          Profile Status
+        </p>
+
+        <div
+          class="w-10 h-10
+                 rounded-xl
+                 bg-cyan-500/10
+                 border border-cyan-500/20
+                 flex items-center
+                 justify-center">
+
+          👤
+
+        </div>
+
+      </div>
+
+
+      <h2
+        id="profileStatus"
+        class="text-3xl
+               font-black
+               mt-5">
+
+        --
+
+      </h2>
+
+
+      <p
+        class="text-slate-500
+               mt-2
+               text-sm">
+
+        Profile verification status
+
+      </p>
+
+
+      <a
+        href="./profile.html"
+        class="primary-btn
+               inline-flex
+               mt-5
+               px-4 py-2.5
+               rounded-xl
+               font-semibold
+               text-sm">
+
+        View / Edit Profile →
+
+      </a>
+
+    </div>
+
+
+
+    <!-- CGPA -->
+
+    <div class="card rounded-3xl p-6">
+
+      <div
+        class="flex
+               items-center
+               justify-between">
+
+        <p class="text-sm text-slate-400">
+          CGPA
+        </p>
+
+        <div
+          class="w-10 h-10
+                 rounded-xl
+                 bg-emerald-500/10
+                 border border-emerald-500/20
+                 flex items-center
+                 justify-center">
+
+          📈
+
+        </div>
+
+      </div>
+
+
+      <h2
+        id="studentCgpa"
+        class="text-5xl
+               font-black
+               mt-5">
+
+        --
+
+      </h2>
+
+
+      <p class="text-slate-500 mt-2">
+        Academic performance
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       CAREER ROADMAP
+  ======================================================== -->
+
+  <section
+    class="card
+           rounded-3xl
+           p-6 md:p-8
+           mb-8">
+
+
+    <div
+      class="flex flex-col
+             md:flex-row
+             md:items-center
+             md:justify-between
+             gap-5
+             mb-7">
+
+
+      <div>
+
+        <div
+          class="flex
+                 items-center
+                 gap-2
+                 mb-2">
+
+          <span
+            class="w-2 h-2
+                   rounded-full
+                   bg-cyan-400">
+          </span>
+
+          <span
+            class="text-cyan-400
+                   text-xs
+                   font-bold
+                   uppercase
+                   section-label">
+
+            Career Roadmap
+
+          </span>
+
+        </div>
+
+
+        <h2
+          class="text-2xl
+                 font-black">
+
+          Your Academic-to-Career Roadmap
+
+        </h2>
+
+
+        <p
+          class="text-slate-500
+                 mt-1">
+
+          Follow a structured path based on your current semester.
+
+        </p>
+
+      </div>
+
+
+      <a
+        href="./roadmap.html"
+        class="primary-btn
+               inline-flex
+               items-center
+               justify-center
+               px-5 py-3
+               rounded-xl
+               font-semibold">
+
+        View Full Roadmap →
+
+      </a>
+
+    </div>
+
+
+
+    <div
+      class="grid
+             grid-cols-1
+             lg:grid-cols-2
+             gap-5">
+
+
+      <!-- LEARNING -->
+
+      <div class="soft-box rounded-2xl p-6">
+
+        <h3
+          class="font-bold
+                 text-lg">
+
+          What to Learn
+
+        </h3>
+
+
+        <div
+          id="roadmapLearning"
+          class="mt-4
+                 space-y-2">
+
+        </div>
+
+      </div>
+
+
+      <!-- PROJECTS -->
+
+      <div class="soft-box rounded-2xl p-6">
+
+        <h3
+          class="font-bold
+                 text-lg">
+
+          Projects to Build
+
+        </h3>
+
+
+        <div
+          id="roadmapProjects"
+          class="mt-4
+                 space-y-2">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       PROFILE
+  ======================================================== -->
+
+  <section
+    class="card
+           rounded-3xl
+           p-6 md:p-8
+           mb-8">
+
+    <div
+      class="flex
+             flex-col
+             md:flex-row
+             md:items-center
+             md:justify-between
+             gap-5
+             mb-7">
+
+      <div>
+
+        <div
+          class="flex
+                 items-center
+                 gap-2
+                 mb-2">
+
+          <span
+            class="w-2 h-2
+                   rounded-full
+                   bg-blue-400">
+          </span>
+
+          <span
+            class="text-blue-400
+                   text-xs
+                   font-bold
+                   uppercase
+                   section-label">
+
+            Profile
+
+          </span>
+
+        </div>
+
+
+        <h2
+          class="text-2xl
+                 font-black">
+
+          My Profile
+
+        </h2>
+
+        <p class="text-slate-500 mt-1">
+          Academic and technical information
+        </p>
+
+      </div>
+
+
+      <a
+        href="./profile.html"
+        class="primary-btn
+               inline-flex
+               items-center
+               justify-center
+               px-5 py-3
+               rounded-xl
+               font-semibold">
+
+        Edit Profile →
+
+      </a>
+
+    </div>
+
+
+    <div
+      class="grid
+             grid-cols-1
+             sm:grid-cols-2
+             gap-4">
+
+
+      <div class="soft-box rounded-2xl p-5">
+
+        <p class="text-xs text-slate-500">
+          University
+        </p>
+
+        <p
+          id="university"
+          class="text-lg
+                 font-bold
+                 mt-2">
+
+          --
+
+        </p>
+
+      </div>
+
+
+      <div class="soft-box rounded-2xl p-5">
+
+        <p class="text-xs text-slate-500">
+          Degree
+        </p>
+
+        <p
+          id="degree"
+          class="text-lg
+                 font-bold
+                 mt-2">
+
+          --
+
+        </p>
+
+      </div>
+
+
+      <div class="soft-box rounded-2xl p-5">
+
+        <p class="text-xs text-slate-500">
+          Specialization
+        </p>
+
+        <p
+          id="specialization"
+          class="text-lg
+                 font-bold
+                 mt-2">
+
+          --
+
+        </p>
+
+      </div>
+
+
+      <div class="soft-box rounded-2xl p-5">
+
+        <p class="text-xs text-slate-500">
+          Graduation Year
+        </p>
+
+        <p
+          id="graduationYear"
+          class="text-lg
+                 font-bold
+                 mt-2">
+
+          --
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="mt-7">
+
+      <p
+        class="text-xs
+               text-slate-500
+               uppercase
+               tracking-wider
+               mb-3">
+
+        Technical Skills
+
+      </p>
+
+
+      <div
+        id="skillsContainer"
+        class="flex
+               flex-wrap
+               gap-2">
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       PLACEMENT SECTION
+       ONLY SHOWN WHEN PLACEMENT ACCESS = TRUE
+  ======================================================== -->
+
+  <section
+    id="placementSection"
+    class="hidden">
+
+
+    <!-- RECOMMENDED ROLES -->
+
+    <div
+      class="card
+             rounded-3xl
+             p-6 md:p-8
+             mb-8">
+
+      <div class="mb-7">
+
+        <div
+          class="flex
+                 items-center
+                 gap-2
+                 mb-2">
+
+          <span
+            class="w-2 h-2
+                   rounded-full
+                   bg-violet-400">
+          </span>
+
+          <span
+            class="text-violet-400
+                   text-xs
+                   font-bold
+                   uppercase
+                   section-label">
+
+            Career Matching
+
+          </span>
+
+        </div>
+
+
+        <h2
+          class="text-2xl
+                 font-black">
+
+          Recommended Roles
+
+        </h2>
+
+
+        <p
+          class="text-slate-500
+                 mt-1">
+
+          Roles matched with your skills and eligibility.
+
+        </p>
+
+      </div>
+
+
+      <div
+        id="recommendedRoles"
+        class="grid
+               grid-cols-1
+               md:grid-cols-2
+               gap-5">
+
+      </div>
+
+    </div>
+
+
+
+    <!-- APPLICATIONS -->
+
+    <div
+      class="card
+             rounded-3xl
+             p-6 md:p-8
+             mb-8">
+
+      <div class="mb-7">
+
+        <h2
+          class="text-2xl
+                 font-black">
+
+          My Applications
+
+        </h2>
+
+        <p
+          class="text-slate-500
+                 mt-1">
+
+          Track your recruitment applications.
+
+        </p>
+
+      </div>
+
+
+      <div
+        id="applicationsContainer"
+        class="overflow-hidden
+               rounded-2xl
+               border
+               border-slate-800">
+
+      </div>
+
+    </div>
+
+
+
+    <!-- PREPARATION -->
+
+    <div
+      class="card
+             rounded-3xl
+             p-6 md:p-8
+             mb-8">
+
+      <div class="mb-7">
+
+        <h2
+          class="text-2xl
+                 font-black">
+
+          Placement Preparation
+
+        </h2>
+
+        <p
+          class="text-slate-500
+                 mt-1">
+
+          Recommended actions based on your current placement readiness.
+
+        </p>
+
+      </div>
+
+
+      <div
+        id="preparationChecklist"
+        class="space-y-3">
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       EARLY-STAGE CAREER MESSAGE
+  ======================================================== -->
+
+  <section
+    id="earlyStageSection"
+    class="card
+           rounded-3xl
+           p-6 md:p-8
+           mb-8">
+
+
+    <div
+      class="grid
+             grid-cols-1
+             md:grid-cols-3
+             gap-5">
+
+
+      <div class="soft-box rounded-2xl p-6">
+
+        <div
+          class="text-2xl mb-4">
+
+          💻
+
+        </div>
+
+        <h3 class="font-bold text-lg">
+          Build Fundamentals
+        </h3>
+
+        <p
+          class="text-sm
+                 text-slate-500
+                 mt-2
+                 leading-6">
+
+          Strengthen programming, web development,
+          databases and problem-solving.
+
+        </p>
+
+      </div>
+
+
+      <div class="soft-box rounded-2xl p-6">
+
+        <div
+          class="text-2xl mb-4">
+
+          🛠️
+
+        </div>
+
+        <h3 class="font-bold text-lg">
+          Build Beginner Projects
+        </h3>
+
+        <p
+          class="text-sm
+                 text-slate-500
+                 mt-2
+                 leading-6">
+
+          Create projects appropriate for your current
+          academic stage and gradually increase complexity.
+
+        </p>
+
+      </div>
+
+
+      <div class="soft-box rounded-2xl p-6">
+
+        <div
+          class="text-2xl mb-4">
+
+          🗺️
+
+        </div>
+
+        <h3 class="font-bold text-lg">
+          Follow Your Roadmap
+        </h3>
+
+        <p
+          class="text-sm
+                 text-slate-500
+                 mt-2
+                 leading-6">
+
+          Your mentor recommendations and AI roadmap
+          will guide your next steps.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="text-center mt-7">
+
+      <a
+        href="./roadmap.html"
+        class="primary-btn
+               inline-flex
+               px-7 py-3
+               rounded-xl
+               font-bold">
+
+        Open Career Roadmap →
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       FOOTER
+  ======================================================== -->
+
+  <footer
+    class="border-t
+           border-slate-800/70
+           mt-12">
+
+    <div
+      class="max-w-7xl
+             mx-auto
+             px-6 py-7
+             text-center">
+
+      <p
+        class="text-slate-500
+               text-sm">
+
+        CareerReady © 2026
+
+      </p>
+
+      <p
+        class="text-slate-700
+               text-xs
+               mt-1">
+
+        Placement Skill Matcher & Readiness Analyzer
+
+      </p>
+
+    </div>
+
+  </footer>
+
+
+
+<script src="../js/api.js"></script>
+<script src="../js/studentDashboard.js"></script>
+
+</body>
+
+</html>

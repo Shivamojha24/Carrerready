@@ -1,0 +1,2 @@
+const bcrypt=require('bcryptjs');
+exports.hash=password=>bcrypt.hash(password,12); exports.compare=(password,hash)=>bcrypt.compare(password,hash);

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics | CareerReady</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            background: #0f172a;
+        }
+
+        .nav-item {
+            transition: 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+        }
+
+        .nav-item.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .chart-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="min-h-screen flex">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar w-72 min-h-screen text-white hidden lg:flex flex-col">
+
+        <div class="px-6 py-6 border-b border-slate-800">
+
+            <h1 class="text-2xl font-black">
+                Career<span class="text-blue-400">Ready</span>
+            </h1>
+
+            <p class="text-sm text-slate-400 mt-1">
+                Placement Management
+            </p>
+
+        </div>
+
+
+        <nav class="flex-1 p-4 space-y-2">
+
+            <a href="./dashboard.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Dashboard
+            </a>
+
+            <a href="./students.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Students
+            </a>
+
+            <a href="./verification.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Verification
+            </a>
+
+            <a href="./drives.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Recruitment Drives
+            </a>
+
+            <a href="./applications.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Applications
+            </a>
+
+            <a href="./analytics.html"
+               class="nav-item active block rounded-xl px-4 py-3 font-semibold">
+                Analytics
+            </a>
+
+            <a href="./reports.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="p-4 border-t border-slate-800">
+
+            <button
+                id="logoutButton"
+                class="w-full rounded-xl bg-slate-800 hover:bg-slate-700 py-3 font-semibold">
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="flex-1 min-w-0">
+
+        <header class="bg-white border-b border-slate-200">
+
+            <div class="px-6 lg:px-10 py-6">
+
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                    <div>
+
+                        <p class="text-sm text-blue-600 font-semibold">
+                            Placement Management
+                        </p>
+
+                        <h2 class="text-3xl font-bold mt-1">
+                            Placement Analytics
+                        </h2>
+
+                        <p class="text-slate-500 mt-2">
+                            Analyze student readiness, skill gaps and recruitment applications.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="refreshButton"
+                        class="px-5 py-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-semibold">
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div class="p-6 lg:p-10">
+
+            <!-- ERROR -->
+
+            <div
+                id="errorMessage"
+                class="hidden mb-6 rounded-xl bg-red-50 border border-red-200 text-red-700 px-5 py-4">
+            </div>
+
+
+            <!-- =================================================
+                 OVERVIEW CARDS
+            ================================================== -->
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Total Students
+                    </p>
+
+                    <p
+                        id="totalStudents"
+                        class="text-4xl font-bold mt-3">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Verified Profiles
+                    </p>
+
+                    <p
+                        id="verifiedProfiles"
+                        class="text-4xl font-bold text-emerald-600 mt-3">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Assessed Students
+                    </p>
+
+                    <p
+                        id="assessedStudents"
+                        class="text-4xl font-bold text-blue-600 mt-3">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Average Readiness
+                    </p>
+
+                    <p
+                        id="averageReadiness"
+                        class="text-4xl font-bold text-indigo-600 mt-3">
+                        --
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 READINESS + APPLICATION CHARTS
+            ================================================== -->
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+
+                <div class="chart-card p-6">
+
+                    <div class="mb-5">
+
+                        <h3 class="text-lg font-bold">
+                            Student Readiness Distribution
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-1">
+                            Distribution of assessed students by readiness level.
+                        </p>
+
+                    </div>
+
+                    <div class="h-80">
+                        <canvas id="readinessChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="chart-card p-6">
+
+                    <div class="mb-5">
+
+                        <h3 class="text-lg font-bold">
+                            Application Status
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-1">
+                            Current status of student applications.
+                        </p>
+
+                    </div>
+
+                    <div class="h-80">
+                        <canvas id="applicationChart"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SKILL GAPS
+            ================================================== -->
+
+            <div class="chart-card p-6 mb-6">
+
+                <div class="mb-6">
+
+                    <h3 class="text-lg font-bold">
+                        Most Common Skill Gaps
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                        Skills missing across verified students for active recruitment roles.
+                    </p>
+
+                </div>
+
+                <div class="h-80">
+                    <canvas id="skillGapChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 READINESS DETAILS
+            ================================================== -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                    <p class="text-xs text-slate-500">
+                        Highly Ready
+                    </p>
+
+                    <p
+                        id="highlyReady"
+                        class="text-3xl font-bold text-emerald-600 mt-2">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                    <p class="text-xs text-slate-500">
+                        Moderately Ready
+                    </p>
+
+                    <p
+                        id="moderatelyReady"
+                        class="text-3xl font-bold text-blue-600 mt-2">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                    <p class="text-xs text-slate-500">
+                        Needs Preparation
+                    </p>
+
+                    <p
+                        id="needsPreparation"
+                        class="text-3xl font-bold text-amber-600 mt-2">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                    <p class="text-xs text-slate-500">
+                        Not Ready
+                    </p>
+
+                    <p
+                        id="notReady"
+                        class="text-3xl font-bold text-red-600 mt-2">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                    <p class="text-xs text-slate-500">
+                        Not Assessed
+                    </p>
+
+                    <p
+                        id="notAssessed"
+                        class="text-3xl font-bold text-slate-600 mt-2">
+                        --
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/placementAnalytics.js"></script>
+
+</body>
+</html>

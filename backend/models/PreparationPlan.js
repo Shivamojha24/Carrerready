@@ -1,0 +1,1 @@
+const mongoose=require('mongoose'); module.exports=mongoose.model('PreparationPlan',new mongoose.Schema({studentId:{type:mongoose.Schema.Types.ObjectId,ref:'User'},driveId:{type:mongoose.Schema.Types.ObjectId,ref:'PlacementDrive'},items:[{title:String,category:String,completed:{type:Boolean,default:false}}],progress:{type:Number,default:0}},{timestamps:true}));

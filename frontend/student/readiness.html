@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Readiness Analysis | CareerReady</title>
+
+    <style>
+        /* =========================================================
+           PAGE
+        ========================================================= */
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            color: #1f2937;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .readiness-page {
+            min-height: 100vh;
+            padding: 35px;
+            box-sizing: border-box;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            color: #111827;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .header-badge {
+            background: #eaf2ff;
+            color: #2563eb;
+            border: 1px solid #cfe0ff;
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           OVERALL READINESS
+        ========================================================= */
+
+        .overall-section {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        .overall-card,
+        .score-card,
+        .skills-card,
+        .gaps-card,
+        .info-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+        }
+
+        .overall-card {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .overall-label {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            background: #eff6ff;
+            border: 12px solid #2563eb;
+            box-sizing: border-box;
+        }
+
+        .score-number {
+            font-size: 38px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .score-out-of {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .readiness-level {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .level-high {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .level-medium {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .level-needs {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .level-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .level-none {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+
+        /* =========================================================
+           SCORE CARDS
+        ========================================================= */
+
+        .score-section {
+            padding: 24px;
+        }
+
+        .section-title {
+            margin: 0 0 20px;
+            font-size: 18px;
+            color: #111827;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .score-card {
+            padding: 20px;
+            box-shadow: none;
+        }
+
+        .score-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .score-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+        }
+
+        .score-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 9px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #2563eb;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+        .score-description {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+
+        /* =========================================================
+           LOWER SECTION
+        ========================================================= */
+
+        .lower-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        .skills-card,
+        .gaps-card,
+        .info-card {
+            padding: 24px;
+        }
+
+        .skill-match-value {
+            font-size: 30px;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .skill-progress {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #2563eb;
+            border-radius: 20px;
+        }
+
+        .gap-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .gap-tag {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 7px 11px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .no-gaps {
+            color: #16a34a;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           BREAKDOWN
+        ========================================================= */
+
+        .breakdown-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+        }
+
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .breakdown-table th,
+        .breakdown-table td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #eef2f7;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .breakdown-table th {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .breakdown-table td {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .breakdown-table tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        /* =========================================================
+           INFO
+        ========================================================= */
+
+        .info-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           STATES
+        ========================================================= */
+
+        .state-box {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .state-box h3 {
+            margin: 0 0 8px;
+            color: #374151;
+        }
+
+        .state-box p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .error-box {
+            background: #fff7f7;
+            border-color: #fecaca;
+        }
+
+        .error-box h3 {
+            color: #991b1b;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+            .overall-section {
+                grid-template-columns: 1fr;
+            }
+
+            .lower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .readiness-page {
+                padding: 20px 15px;
+            }
+
+            .page-header {
+                flex-direction: column;
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .breakdown-table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="readiness-page">
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <section class="page-header">
+
+            <div>
+                <h1>Readiness Analysis</h1>
+
+                <p>
+                    Understand your placement readiness,
+                    strengths and areas that need improvement.
+                </p>
+            </div>
+
+            <div class="header-badge">
+                CareerReady
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTENT
+        ====================================================== -->
+
+        <section id="contentArea">
+
+            <div class="state-box">
+
+                <h3>
+                    Loading readiness analysis...
+                </h3>
+
+                <p>
+                    Please wait while we calculate your
+                    placement readiness.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+    <script src="../js/studentReadiness.js"></script>
+
+</body>
+</html>

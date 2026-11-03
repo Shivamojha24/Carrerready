@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CareerReady | Mentor Recommendations</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        :root {
+            --bg: #FAF8FF;
+            --card: #FFFFFF;
+            --secondary: #F3EEFF;
+            --lav-light: #EDE5FF;
+            --lavender: #B8A1F7;
+            --purple: #8B5CF6;
+            --purple-dark: #6D28D9;
+            --text: #2E2347;
+            --muted: #766B8A;
+            --border: #E5DDF7;
+            --hover: #F0EAFE;
+            --shadow: rgba(109, 40, 217, 0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--purple);
+            outline-offset: 2px;
+        }
+
+        .heading { color: var(--purple-dark); }
+        .muted { color: var(--muted); }
+
+        .glass {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 12px var(--shadow);
+        }
+
+        .section-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 4px 18px var(--shadow);
+        }
+
+        .tile {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* Navigation pills */
+        .nav-pill {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover {
+            background: var(--hover);
+            color: var(--purple-dark);
+            border-color: var(--lavender);
+        }
+
+        .nav-pill.active {
+            background: var(--lav-light);
+            border-color: var(--lavender);
+            color: var(--purple-dark);
+        }
+
+        .logout-pill {
+            background: #FFFFFF;
+            border: 1px solid #FECACA;
+            color: #B91C1C;
+            transition: all 0.2s ease;
+        }
+
+        .logout-pill:hover { background: #FEF2F2; }
+
+        /* Form fields */
+        .input-box {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 13px 16px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-box:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.20);
+        }
+
+        .input-box::placeholder {
+            color: var(--muted);
+            opacity: 0.75;
+        }
+
+        select option { background: #FFFFFF; color: var(--text); }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* Buttons */
+        .primary-btn {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+            transition: 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(109, 40, 217, 0.30);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .secondary-btn {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            color: var(--purple-dark);
+            transition: all 0.2s ease;
+        }
+
+        .secondary-btn:hover {
+            background: var(--hover);
+            border-color: var(--lavender);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-blue {
+            color: var(--purple-dark);
+            background: var(--lav-light);
+            border: 1px solid #D9CCFB;
+        }
+
+        .badge-green {
+            color: #15803D;
+            background: #DCFCE7;
+            border: 1px solid #BBF7D0;
+        }
+
+        .badge-yellow {
+            color: #B45309;
+            background: #FEF3C7;
+            border: 1px solid #FDE68A;
+        }
+
+        .badge-red {
+            color: #B91C1C;
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+        }
+
+        .recommendation-card {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .recommendation-card:hover {
+            background: var(--hover);
+            border-color: var(--lavender);
+        }
+
+        /* ============================================================
+           Remaps for classes generated by ../js/mentorReviews.js
+           (skill pills, recommendation cards, message box, etc.).
+           html body = higher specificity than the Tailwind CDN.
+        ============================================================ */
+        html body .text-white, html body .text-slate-100, html body .text-slate-200 { color: var(--text); }
+        html body .text-slate-300, html body .text-slate-400,
+        html body .text-slate-500, html body .text-slate-600 { color: var(--muted); }
+        html body .text-blue-300, html body .text-blue-400, html body .text-cyan-300,
+        html body .text-cyan-400 { color: var(--purple-dark); }
+        html body .text-green-300, html body .text-green-400,
+        html body .text-emerald-300, html body .text-emerald-400 { color: #15803D; }
+        html body .text-yellow-300, html body .text-yellow-400,
+        html body .text-amber-300, html body .text-amber-400 { color: #B45309; }
+        html body .text-red-300, html body .text-red-400 { color: #B91C1C; }
+
+        html body .bg-slate-700, html body .bg-slate-800 { background-color: var(--lav-light); }
+        html body .bg-slate-900, html body .bg-slate-950 { background-color: var(--secondary); }
+        html body .bg-blue-500\/10, html body .bg-blue-600\/15,
+        html body .bg-cyan-500\/10 { background-color: var(--lav-light); }
+        html body .bg-green-500\/10, html body .bg-emerald-500\/10 { background-color: #DCFCE7; }
+        html body .bg-yellow-500\/10, html body .bg-amber-500\/10 { background-color: #FEF3C7; }
+        html body .bg-red-500\/5, html body .bg-red-500\/10 { background-color: #FEE2E2; }
+        html body .bg-blue-600 { background-color: var(--purple); color: #FFFFFF; }
+        html body .hover\:bg-slate-700:hover, html body .hover\:bg-slate-800:hover { background-color: var(--hover); }
+        html body .hover\:bg-red-500\/10:hover { background-color: #FEE2E2; }
+
+        html body .border-slate-700, html body .border-slate-800 { border-color: var(--border); }
+        html body .border-blue-500\/20, html body .border-blue-500\/25,
+        html body .border-cyan-500\/20 { border-color: #D9CCFB; }
+        html body .border-green-500\/20, html body .border-emerald-500\/20 { border-color: #BBF7D0; }
+        html body .border-yellow-500\/20, html body .border-amber-500\/20 { border-color: #FDE68A; }
+        html body .border-red-500\/20, html body .border-red-500\/25 { border-color: #FECACA; }
+
+        /* Skill pills rendered by JS */
+        html body #studentSkills > * {
+            background: var(--lav-light);
+            color: var(--purple-dark);
+            border: 1px solid #D9CCFB;
+            border-radius: 999px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Buttons inside generated recommendation cards */
+        html body #recommendationsList button {
+            background: #FFFFFF;
+            color: var(--purple-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        html body #recommendationsList button:hover {
+            background: var(--hover);
+            border-color: var(--lavender);
+        }
+
+        /* Generated recommendation cards: force the light theme no matter
+           which dark classes or inline styles the script applies */
+        html body #recommendationsList > * {
+            background: var(--secondary) !important;
+            background-color: var(--secondary) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 16px !important;
+            box-shadow: none !important;
+        }
+
+        html body #recommendationsList div:not([class*="border"]):not([style*="border"]) {
+            background: transparent !important;
+        }
+
+        html body #recommendationsList div[class*="border"],
+        html body #recommendationsList div[style*="border"],
+        html body #recommendationsList blockquote {
+            background: #FFFFFF !important;
+            background-color: #FFFFFF !important;
+            border: 1px solid var(--border) !important;
+            border-left: 3px solid var(--purple) !important;
+            border-radius: 12px !important;
+        }
+
+        html body #recommendationsList h3,
+        html body #recommendationsList h4 { color: var(--purple-dark) !important; }
+
+        html body #recommendationsList p { color: var(--text) !important; }
+
+        html body #recommendationsList p[class*="uppercase"],
+        html body #recommendationsList p[class*="text-xs"],
+        html body #recommendationsList p[class*="text-slate"] { color: var(--muted) !important; }
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav class="glass">
+
+        <div class="max-w-7xl mx-auto px-5 md:px-8 py-4">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center font-black text-white"
+                         style="background: linear-gradient(135deg, var(--purple), var(--purple-dark)); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35)">
+                        C
+                    </div>
+
+                    <div>
+
+                        <div class="text-xl font-black heading">
+
+                            Career<span style="color: var(--purple)">
+                                Ready
+                            </span>
+
+                        </div>
+
+                        <p class="text-xs muted">
+                            Mentor Portal
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-wrap gap-2">
+
+                    <a
+                        href="./dashboard.html"
+                        class="nav-pill px-4 py-2.5 rounded-xl text-sm font-semibold"
+                    >
+                        Dashboard
+                    </a>
+
+
+                    <a
+                        href="./students.html"
+                        class="nav-pill px-4 py-2.5 rounded-xl text-sm font-semibold"
+                    >
+                        Students
+                    </a>
+
+
+                    <a
+                        href="./reviews.html"
+                        class="nav-pill active px-4 py-2.5 rounded-xl text-sm font-semibold"
+                    >
+                        Recommendations
+                    </a>
+
+
+                    <button
+                        id="logoutButton"
+                        type="button"
+                        class="logout-pill px-4 py-2.5 rounded-xl text-sm font-semibold"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="max-w-7xl mx-auto px-5 md:px-8 py-8 md:py-10">
+
+        <!-- HEADER -->
+
+        <section class="mb-8">
+
+            <p class="text-xs font-bold tracking-[0.18em] uppercase"
+               style="color: var(--purple)">
+                Mentor Guidance
+            </p>
+
+            <h1 class="heading text-3xl md:text-4xl font-black mt-2">
+                Student Recommendations
+            </h1>
+
+            <p class="muted mt-3 max-w-3xl">
+                Provide personalized learning, project, certification,
+                placement and career recommendations based on the student's
+                academic progress and career development.
+            </p>
+
+        </section>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="messageBox"
+            class="hidden mb-6 rounded-xl px-5 py-4 text-sm"
+        ></div>
+
+
+        <!-- =================================================
+             SELECT STUDENT
+        ================================================== -->
+
+        <section class="section-card p-6 mb-6">
+
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+
+                <div>
+
+                    <h2 class="heading text-xl font-bold">
+                        Select Student
+                    </h2>
+
+                    <p class="text-sm muted mt-1">
+                        Choose the student you want to guide.
+                    </p>
+
+                </div>
+
+
+                <div class="w-full md:w-96">
+
+                    <select
+                        id="studentSelect"
+                        class="input-box"
+                    >
+
+                        <option value="">
+                            Loading students...
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             STUDENT INFORMATION
+        ================================================== -->
+
+        <section
+            id="studentInfoSection"
+            class="hidden section-card p-6 mb-6"
+        >
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+                <div>
+
+                    <h2
+                        id="studentName"
+                        class="heading text-2xl font-black"
+                    >
+                        —
+                    </h2>
+
+                    <p
+                        id="studentEmail"
+                        class="text-sm muted mt-1"
+                    >
+                        —
+                    </p>
+
+                </div>
+
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full lg:w-auto">
+
+                    <div class="tile rounded-xl px-4 py-3">
+
+                        <p class="text-xs muted">
+                            Program
+                        </p>
+
+                        <p
+                            id="studentProgram"
+                            class="font-semibold text-sm mt-1"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <div class="tile rounded-xl px-4 py-3">
+
+                        <p class="text-xs muted">
+                            Semester
+                        </p>
+
+                        <p
+                            id="studentSemester"
+                            class="font-semibold text-sm mt-1"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <div class="tile rounded-xl px-4 py-3">
+
+                        <p class="text-xs muted">
+                            Academic Year
+                        </p>
+
+                        <p
+                            id="studentYear"
+                            class="font-semibold text-sm mt-1"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+
+                    <div class="tile rounded-xl px-4 py-3">
+
+                        <p class="text-xs muted">
+                            CGPA
+                        </p>
+
+                        <p
+                            id="studentCgpa"
+                            class="font-semibold text-sm mt-1"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SKILLS -->
+
+            <div class="mt-6">
+
+                <p class="text-xs font-bold uppercase tracking-wider mb-3"
+                   style="color: var(--purple-dark)">
+                    Current Skills
+                </p>
+
+                <div
+                    id="studentSkills"
+                    class="flex flex-wrap gap-2"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RECOMMENDATION FORM
+        ================================================== -->
+
+        <section
+            id="recommendationSection"
+            class="hidden section-card p-6 mb-6"
+        >
+
+            <div class="mb-6">
+
+                <h2 class="heading text-xl font-bold">
+                    Create Recommendation
+                </h2>
+
+                <p class="text-sm muted mt-1">
+                    Give the student clear and actionable guidance.
+                </p>
+
+            </div>
+
+
+            <form
+                id="recommendationForm"
+            >
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <!-- CATEGORY -->
+
+                    <div>
+
+                        <label
+                            for="category"
+                            class="block text-sm font-semibold ink mb-2"
+                            style="color: var(--text)"
+                        >
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            class="input-box"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="LEARNING">
+                                Learning
+                            </option>
+
+                            <option value="PROJECT">
+                                Project
+                            </option>
+
+                            <option value="PLACEMENT">
+                                Placement
+                            </option>
+
+                            <option value="CERTIFICATION">
+                                Certification
+                            </option>
+
+                            <option value="CAREER">
+                                Career
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SEMESTER -->
+
+                    <div>
+
+                        <label
+                            for="targetSemester"
+                            class="block text-sm font-semibold mb-2"
+                            style="color: var(--text)"
+                        >
+                            Target Semester
+                        </label>
+
+                        <select
+                            id="targetSemester"
+                            class="input-box"
+                            required
+                        >
+
+                            <option value="">
+                                Select semester
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TITLE -->
+
+                    <div class="md:col-span-2">
+
+                        <label
+                            for="title"
+                            class="block text-sm font-semibold mb-2"
+                            style="color: var(--text)"
+                        >
+                            Recommendation Title
+                        </label>
+
+                        <input
+                            id="title"
+                            type="text"
+                            class="input-box"
+                            placeholder="Example: Strengthen Cloud Security Fundamentals"
+                            maxlength="120"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- RECOMMENDATION -->
+
+                    <div class="md:col-span-2">
+
+                        <label
+                            for="recommendation"
+                            class="block text-sm font-semibold mb-2"
+                            style="color: var(--text)"
+                        >
+                            Recommendation
+                        </label>
+
+                        <textarea
+                            id="recommendation"
+                            rows="5"
+                            class="input-box"
+                            placeholder="Explain what the student should do and why it is important..."
+                            maxlength="1000"
+                            required
+                        ></textarea>
+
+                        <p class="text-xs muted mt-2">
+                            Give practical and specific guidance.
+                        </p>
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div>
+
+                        <label
+                            for="skills"
+                            class="block text-sm font-semibold mb-2"
+                            style="color: var(--text)"
+                        >
+                            Relevant Skills
+                        </label>
+
+                        <input
+                            id="skills"
+                            type="text"
+                            class="input-box"
+                            placeholder="Linux, Networking, AWS, Cloud Security"
+                        >
+
+                        <p class="text-xs muted mt-2">
+                            Separate multiple skills with commas.
+                        </p>
+
+                    </div>
+
+
+                    <!-- PROJECT -->
+
+                    <div>
+
+                        <label
+                            for="suggestedProject"
+                            class="block text-sm font-semibold mb-2"
+                            style="color: var(--text)"
+                        >
+                            Suggested Project
+                        </label>
+
+                        <input
+                            id="suggestedProject"
+                            type="text"
+                            class="input-box"
+                            placeholder="Cloud Security Monitoring Dashboard"
+                            maxlength="150"
+                        >
+
+                    </div>
+
+
+                    <!-- PRIORITY -->
+
+                    <div>
+
+                        <label
+                            for="priority"
+                            class="block text-sm font-semibold mb-2"
+                            style="color: var(--text)"
+                        >
+                            Priority
+                        </label>
+
+                        <select
+                            id="priority"
+                            class="input-box"
+                            required
+                        >
+
+                            <option value="LOW">
+                                Low
+                            </option>
+
+                            <option
+                                value="MEDIUM"
+                                selected
+                            >
+                                Medium
+                            </option>
+
+                            <option value="HIGH">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="mt-6 flex flex-col sm:flex-row sm:justify-end gap-3">
+
+                    <button
+                        type="reset"
+                        id="resetButton"
+                        class="secondary-btn px-5 py-3 rounded-xl font-semibold"
+                    >
+                        Clear
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveButton"
+                        class="primary-btn px-6 py-3 rounded-xl font-bold"
+                    >
+                        Save Recommendation
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =================================================
+             EXISTING RECOMMENDATIONS
+        ================================================== -->
+
+        <section
+            id="recommendationsSection"
+            class="hidden section-card p-6"
+        >
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+
+                <div>
+
+                    <h2 class="heading text-xl font-bold">
+                        Your Recommendations
+                    </h2>
+
+                    <p class="text-sm muted mt-1">
+                        Active guidance already provided to this student.
+                    </p>
+
+                </div>
+
+
+                <span
+                    id="recommendationCount"
+                    class="badge badge-blue"
+                >
+                    0 recommendations
+                </span>
+
+            </div>
+
+
+            <div
+                id="recommendationsList"
+                class="space-y-4"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        <section
+            id="emptyState"
+            class="section-card p-10 text-center"
+        >
+
+            <div
+                class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl"
+                style="background: var(--lav-light); border: 1px solid #D9CCFB; color: var(--purple-dark)"
+            >
+                +
+            </div>
+
+            <h2 class="heading text-xl font-bold mt-5">
+                Select a student
+            </h2>
+
+            <p class="muted text-sm mt-2">
+                Select a student above to create personalized mentor guidance.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="../js/api.js"></script>
+    <script src="../js/mentorReviews.js"></script>
+
+</body>
+
+</html>
+

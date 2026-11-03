@@ -1,0 +1,1333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>CareerReady | My Profile</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        radial-gradient(
+          circle at 5% 5%,
+          rgba(37, 99, 235, 0.18),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 95% 20%,
+          rgba(6, 182, 212, 0.10),
+          transparent 25%
+        ),
+        #020617;
+
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(148, 163, 184, 0.13);
+    }
+
+    .section-card {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(30, 41, 59, 0.86),
+          rgba(15, 23, 42, 0.94)
+        );
+
+      border: 1px solid rgba(96, 165, 250, 0.14);
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .section-card:hover {
+      border-color: rgba(96, 165, 250, 0.28);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+    }
+
+    .input-box {
+      transition: all 0.2s ease;
+    }
+
+    .input-box:focus {
+      border-color: rgba(59, 130, 246, 0.9);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.10);
+    }
+
+    .gradient-text {
+      background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #22d3ee
+      );
+
+      background-clip: text;
+      -webkit-background-clip: text;
+
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .primary-btn {
+      background: linear-gradient(
+        135deg,
+        #2563eb,
+        #0891b2
+      );
+
+      transition: all 0.2s ease;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+    }
+
+    .secondary-btn {
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      transition: all 0.2s ease;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(51, 65, 85, 0.75);
+      border-color: rgba(96, 165, 250, 0.3);
+    }
+
+    .experience-option {
+      transition: all 0.2s ease;
+    }
+
+    .experience-option:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: rgba(37, 99, 235, 0.06);
+    }
+
+    .experience-option:has(input:checked) {
+      border-color: rgba(59, 130, 246, 0.65);
+      background: rgba(37, 99, 235, 0.10);
+      box-shadow: 0 0 20px rgba(37, 99, 235, 0.06);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #020617;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+
+    /* =====================================================
+       LAVENDER / PURPLE THEME
+       Visual-only overrides; functionality remains unchanged
+    ====================================================== */
+
+    body {
+      background:
+        radial-gradient(
+          circle at 5% 5%,
+          rgba(196, 181, 253, 0.45),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 95% 20%,
+          rgba(221, 214, 254, 0.50),
+          transparent 28%
+        ),
+        #f7f5ff;
+
+      color: #312e4b;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.90);
+      border-color: #e5defa;
+      box-shadow: 0 8px 28px rgba(91, 72, 150, 0.06);
+    }
+
+    .section-card {
+      background: linear-gradient(135deg, #ffffff, #f8f6ff);
+      border-color: #e6defb;
+      box-shadow: 0 8px 24px rgba(91, 72, 150, 0.06);
+    }
+
+    .section-card:hover {
+      border-color: #c4b5fd;
+      box-shadow: 0 18px 40px rgba(91, 72, 150, 0.10);
+    }
+
+    .input-box {
+      background: #ffffff !important;
+      color: #312e4b !important;
+      border-color: #d8d0ef !important;
+    }
+
+    .input-box::placeholder {
+      color: #9b93b1 !important;
+    }
+
+    .input-box:focus {
+      border-color: #8b5cf6 !important;
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12) !important;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #7950d8, #a78bfa);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #7950d8, #9570e8);
+      color: #ffffff;
+    }
+
+    .primary-btn:hover {
+      box-shadow: 0 10px 30px rgba(121, 80, 216, 0.24);
+    }
+
+    .secondary-btn {
+      background: #f2edff;
+      color: #5b36a8;
+      border-color: #ddd2fa;
+    }
+
+    .secondary-btn:hover {
+      background: #e9e0ff;
+      border-color: #c4b5fd;
+    }
+
+    .experience-option {
+      background: #ffffff;
+      border-color: #e2daf5;
+    }
+
+    .experience-option:hover {
+      border-color: #b9a3f5;
+      background: #f8f5ff;
+    }
+
+    .experience-option:has(input:checked) {
+      border-color: #9b7be8;
+      background: #f0eaff;
+      box-shadow: 0 0 20px rgba(121, 80, 216, 0.08);
+    }
+
+    /* Text colors */
+
+    .text-white {
+      color: #312e4b !important;
+    }
+
+    .text-cyan-400,
+    .text-blue-400 {
+      color: #7950c8 !important;
+    }
+
+    .text-slate-300 {
+      color: #51496d !important;
+    }
+
+    .text-slate-400 {
+      color: #756d8e !important;
+    }
+
+    .text-slate-500 {
+      color: #8a829f !important;
+    }
+
+    .text-slate-600,
+    .text-slate-700 {
+      color: #9188a7 !important;
+    }
+
+    /* Brand logo */
+
+    .bg-gradient-to-br.from-blue-500.to-cyan-400 {
+      background-image: linear-gradient(
+        135deg,
+        #7950d8,
+        #b39af5
+      ) !important;
+    }
+
+    /* Icon backgrounds */
+
+    .bg-blue-500\/10,
+    .bg-cyan-500\/10,
+    .bg-violet-500\/10 {
+      background-color: #f0eaff !important;
+    }
+
+    .border-blue-500\/20,
+    .border-cyan-500\/20,
+    .border-violet-500\/20 {
+      border-color: #ddd2fa !important;
+    }
+
+    .bg-amber-500\/10 {
+      background-color: #fff5df !important;
+    }
+
+    .border-amber-500\/20 {
+      border-color: #f3dfb1 !important;
+    }
+
+    .bg-emerald-500\/10 {
+      background-color: #e5f7f0 !important;
+    }
+
+    .border-emerald-500\/20 {
+      border-color: #bce8d7 !important;
+    }
+
+    /* Navigation and form backgrounds */
+
+    .bg-slate-800\/60,
+    .bg-slate-950\/70,
+    .bg-slate-950\/60 {
+      background-color: #f5f2ff !important;
+    }
+
+    .border-slate-700,
+    .border-slate-800\/70 {
+      border-color: #e2daf5 !important;
+    }
+
+    .hover\:border-blue-500\/40:hover {
+      border-color: #b9a3f5 !important;
+    }
+
+    .hover\:text-white:hover {
+      color: #5b36a8 !important;
+    }
+
+    /* Checkbox accent */
+
+    .accent-blue-600 {
+      accent-color: #7950d8 !important;
+    }
+
+    /* Logout colors */
+
+    .bg-red-500\/5 {
+      background-color: #fff5f5 !important;
+    }
+
+    .border-red-500\/25 {
+      border-color: #f0cccc !important;
+    }
+
+    .text-red-300 {
+      color: #bd4545 !important;
+    }
+
+    .hover\:bg-red-500\/10:hover {
+      background-color: #ffe8e8 !important;
+    }
+
+    /* Select options */
+
+    select option {
+      background: #ffffff;
+      color: #312e4b;
+    }
+
+    /* Disabled buttons */
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    /* Scrollbar */
+
+    ::-webkit-scrollbar-track {
+      background: #f7f5ff;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c4b5fd;
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a78bfa;
+    }
+
+  </style>
+
+</head>
+
+
+<body class="text-white">
+
+
+  <!-- NAVIGATION -->
+
+  <header class="glass sticky top-0 z-50">
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 py-4">
+
+      <div
+        class="flex flex-col
+               sm:flex-row
+               sm:items-center
+               sm:justify-between
+               gap-4">
+
+        <!-- BRAND -->
+
+        <div class="flex items-center gap-3">
+
+          <a
+            href="./dashboard.html"
+            class="w-11 h-11 rounded-xl
+                   bg-gradient-to-br
+                   from-blue-500 to-cyan-400
+                   flex items-center justify-center
+                   shadow-lg shadow-blue-500/20">
+
+            <span class="font-black">
+              CR
+            </span>
+
+          </a>
+
+          <div>
+
+            <h1 class="font-black text-lg">
+              Career<span class="text-cyan-400">Ready</span>
+            </h1>
+
+            <p class="text-[11px] text-slate-500">
+              Student Portal
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- NAV -->
+
+        <nav class="flex items-center gap-2">
+
+          <a
+            href="./dashboard.html"
+            class="rounded-xl
+                   px-4 py-2.5
+                   text-sm font-semibold
+                   text-slate-300
+                   bg-slate-800/60
+                   border border-slate-700
+                   hover:border-blue-500/40
+                   hover:text-white
+                   transition">
+
+            Dashboard
+
+          </a>
+
+          <button
+            type="button"
+            id="logoutButton"
+            class="rounded-xl
+                   px-4 py-2.5
+                   text-sm font-semibold
+                   text-red-300
+                   bg-red-500/5
+                   border border-red-500/25
+                   hover:bg-red-500/10
+                   transition">
+
+            Logout
+
+          </button>
+
+        </nav>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main class="max-w-5xl mx-auto px-5 sm:px-6 py-10">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="mb-9">
+
+      <div class="flex items-center gap-2 mb-3">
+
+        <span
+          class="w-2.5 h-2.5
+                 rounded-full
+                 bg-cyan-400">
+        </span>
+
+        <span
+          class="text-cyan-400
+                 text-xs
+                 font-bold
+                 uppercase
+                 tracking-[0.18em]">
+
+          Student Profile
+
+        </span>
+
+      </div>
+
+
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight">
+
+        Build Your
+
+        <span class="gradient-text">
+          Placement Profile
+        </span>
+
+      </h2>
+
+
+      <p
+        class="text-slate-400
+               mt-3
+               text-base md:text-lg
+               max-w-3xl">
+
+        Add your academic background, technical skills,
+        certifications, projects and experience.
+
+      </p>
+
+    </section>
+
+
+    <!-- MESSAGE -->
+
+    <div
+      id="profileMessage"
+      class="hidden
+             mb-6
+             rounded-2xl
+             px-5 py-4
+             text-sm">
+    </div>
+
+
+    <!-- FORM -->
+
+    <form
+      id="profileForm"
+      class="space-y-6">
+
+
+      <!-- ACADEMIC INFORMATION -->
+
+      <section class="section-card rounded-3xl p-6 md:p-8">
+
+        <div class="flex items-start gap-4 mb-7">
+
+          <div
+            class="w-11 h-11 rounded-xl
+                   bg-blue-500/10
+                   border border-blue-500/20
+                   flex items-center justify-center
+                   text-lg">
+
+            🎓
+
+          </div>
+
+          <div>
+
+            <h3 class="text-xl font-bold">
+              Academic Information
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-1">
+              Enter your current academic details.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="grid
+                 grid-cols-1
+                 md:grid-cols-2
+                 gap-5">
+
+
+          <!-- UNIVERSITY -->
+
+          <div>
+
+            <label
+              for="university"
+              class="block text-sm
+                     font-medium
+                     text-slate-300 mb-2">
+
+              University
+
+            </label>
+
+            <input
+              type="text"
+              id="university"
+              name="university"
+              placeholder="e.g. Lovely Professional University"
+              required
+              class="input-box w-full
+                     rounded-xl
+                     border border-slate-700
+                     bg-slate-950/70
+                     px-4 py-3.5
+                     text-white
+                     placeholder-slate-600
+                     outline-none">
+
+          </div>
+
+
+          <!-- DEGREE -->
+
+          <div>
+
+            <label
+              for="degree"
+              class="block text-sm
+                     font-medium
+                     text-slate-300 mb-2">
+
+              Degree
+
+            </label>
+
+            <input
+              type="text"
+              id="degree"
+              name="degree"
+              placeholder="e.g. B.Tech CSE"
+              required
+              class="input-box w-full
+                     rounded-xl
+                     border border-slate-700
+                     bg-slate-950/70
+                     px-4 py-3.5
+                     text-white
+                     placeholder-slate-600
+                     outline-none">
+
+          </div>
+
+
+          <!-- SPECIALIZATION -->
+
+          <div>
+
+            <label
+              for="specialization"
+              class="block text-sm
+                     font-medium
+                     text-slate-300 mb-2">
+
+              Specialization
+
+            </label>
+
+            <input
+              type="text"
+              id="specialization"
+              name="specialization"
+              placeholder="e.g. Cloud Computing"
+              class="input-box w-full
+                     rounded-xl
+                     border border-slate-700
+                     bg-slate-950/70
+                     px-4 py-3.5
+                     text-white
+                     placeholder-slate-600
+                     outline-none">
+
+          </div>
+
+
+          <!-- PROGRAM DURATION -->
+
+          <div>
+
+            <label
+              for="programDuration"
+              class="block text-sm
+                     font-medium
+                     text-slate-300 mb-2">
+
+              Program Duration
+
+            </label>
+
+            <select
+              id="programDuration"
+              name="programDuration"
+              required
+              class="input-box w-full
+                     rounded-xl
+                     border border-slate-700
+                     bg-slate-950/70
+                     px-4 py-3.5
+                     text-white
+                     outline-none">
+
+              <option value="" class="bg-slate-900">
+                Select program duration
+              </option>
+
+              <option value="2" class="bg-slate-900">
+                2 Years
+              </option>
+
+              <option value="3" class="bg-slate-900">
+                3 Years
+              </option>
+
+              <option value="4" class="bg-slate-900">
+                4 Years
+              </option>
+
+            </select>
+
+            <p class="text-xs text-slate-500 mt-2">
+              Select the total duration of your academic program.
+            </p>
+
+          </div>
+
+
+          <!-- GRADUATION YEAR -->
+
+          <div>
+
+            <label
+              for="graduationYear"
+              class="block text-sm
+                     font-medium
+                     text-slate-300 mb-2">
+
+              Graduation Year
+
+            </label>
+
+            <input
+              type="number"
+              id="graduationYear"
+              name="graduationYear"
+              placeholder="2028"
+              min="2020"
+              max="2040"
+              required
+              class="input-box w-full
+                     rounded-xl
+                     border border-slate-700
+                     bg-slate-950/70
+                     px-4 py-3.5
+                     text-white
+                     placeholder-slate-600
+                     outline-none">
+
+          </div>
+
+
+          <!-- CGPA -->
+
+          <div>
+
+            <label
+              for="cgpa"
+              class="block text-sm
+                     font-medium
+                     text-slate-300 mb-2">
+
+              CGPA
+
+            </label>
+
+            <input
+              type="number"
+              id="cgpa"
+              name="cgpa"
+              placeholder="7.50"
+              min="0"
+              max="10"
+              step="0.01"
+              required
+              class="input-box w-full
+                     rounded-xl
+                     border border-slate-700
+                     bg-slate-950/70
+                     px-4 py-3.5
+                     text-white
+                     placeholder-slate-600
+                     outline-none">
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TECHNICAL SKILLS -->
+
+      <section class="section-card rounded-3xl p-6 md:p-8">
+
+        <div class="flex items-start gap-4 mb-7">
+
+          <div
+            class="w-11 h-11 rounded-xl
+                   bg-cyan-500/10
+                   border border-cyan-500/20
+                   flex items-center justify-center
+                   text-lg">
+
+            💻
+
+          </div>
+
+          <div>
+
+            <h3 class="text-xl font-bold">
+              Technical Skills
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-1">
+              Add skills that you currently know or practice.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex flex-col sm:flex-row gap-3">
+
+          <input
+            type="text"
+            id="skillInput"
+            placeholder="e.g. JavaScript"
+            class="input-box flex-1
+                   rounded-xl
+                   border border-slate-700
+                   bg-slate-950/70
+                   px-4 py-3.5
+                   text-white
+                   placeholder-slate-600
+                   outline-none">
+
+          <button
+            type="button"
+            id="addSkillButton"
+            class="primary-btn
+                   rounded-xl
+                   px-6 py-3.5
+                   font-bold">
+
+            + Add Skill
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="skillsContainer"
+          class="flex flex-wrap gap-2 mt-5">
+        </div>
+
+
+        <input
+          type="hidden"
+          id="skills"
+          name="skills">
+
+      </section>
+
+
+      <!-- CERTIFICATIONS -->
+
+      <section class="section-card rounded-3xl p-6 md:p-8">
+
+        <div
+          class="flex flex-col
+                 sm:flex-row
+                 sm:items-center
+                 sm:justify-between
+                 gap-4 mb-7">
+
+          <div class="flex items-start gap-4">
+
+            <div
+              class="w-11 h-11 rounded-xl
+                     bg-amber-500/10
+                     border border-amber-500/20
+                     flex items-center justify-center
+                     text-lg">
+
+              🏆
+
+            </div>
+
+            <div>
+
+              <h3 class="text-xl font-bold">
+                Certifications
+              </h3>
+
+              <p class="text-sm text-slate-500 mt-1">
+                Add certificates and professional credentials.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            id="addCertificationButton"
+            class="secondary-btn
+                   rounded-xl
+                   px-4 py-2.5
+                   text-sm
+                   font-semibold">
+
+            + Add Certification
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="certificationsContainer"
+          class="space-y-4">
+        </div>
+
+      </section>
+
+
+      <!-- PROJECTS -->
+
+      <section class="section-card rounded-3xl p-6 md:p-8">
+
+        <div
+          class="flex flex-col
+                 sm:flex-row
+                 sm:items-center
+                 sm:justify-between
+                 gap-4 mb-7">
+
+          <div class="flex items-start gap-4">
+
+            <div
+              class="w-11 h-11 rounded-xl
+                     bg-violet-500/10
+                     border border-violet-500/20
+                     flex items-center justify-center
+                     text-lg">
+
+              🚀
+
+            </div>
+
+            <div>
+
+              <h3 class="text-xl font-bold">
+                Projects
+              </h3>
+
+              <p class="text-sm text-slate-500 mt-1">
+                Showcase academic and personal projects.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            id="addProjectButton"
+            class="secondary-btn
+                   rounded-xl
+                   px-4 py-2.5
+                   text-sm
+                   font-semibold">
+
+            + Add Project
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="projectsContainer"
+          class="space-y-4">
+        </div>
+
+      </section>
+
+
+      <!-- EXPERIENCE -->
+
+      <section class="section-card rounded-3xl p-6 md:p-8">
+
+        <div class="flex items-start gap-4 mb-7">
+
+          <div
+            class="w-11 h-11 rounded-xl
+                   bg-emerald-500/10
+                   border border-emerald-500/20
+                   flex items-center justify-center
+                   text-lg">
+
+            💼
+
+          </div>
+
+          <div>
+
+            <h3 class="text-xl font-bold">
+              Experience & Exposure
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-1">
+              Select the types of experience you have.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="grid
+                 grid-cols-1
+                 sm:grid-cols-2
+                 lg:grid-cols-3
+                 gap-3">
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="INTERNSHIP"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Internship
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="ACADEMIC_PROJECT"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Academic Project
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="PERSONAL_PROJECT"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Personal Project
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="HACKATHON"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Hackathon
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="OPEN_SOURCE"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Open Source
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="FREELANCE"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Freelance
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="RESEARCH"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Research
+            </span>
+
+          </label>
+
+
+          <label
+            class="experience-option
+                   flex items-center gap-3
+                   rounded-2xl
+                   border border-slate-700
+                   bg-slate-950/60
+                   p-4 cursor-pointer">
+
+            <input
+              type="checkbox"
+              name="experience"
+              value="PROFESSIONAL_EXPERIENCE"
+              class="accent-blue-600">
+
+            <span class="text-sm font-medium">
+              Professional Experience
+            </span>
+
+          </label>
+
+        </div>
+
+      </section>
+
+
+      <!-- SAVE / SUBMIT -->
+
+      <section
+        class="glass
+               rounded-3xl
+               p-6 md:p-7
+               sticky bottom-4
+               shadow-2xl">
+
+        <div
+          class="flex flex-col
+                 sm:flex-row
+                 sm:items-center
+                 sm:justify-between
+                 gap-4">
+
+          <div>
+
+            <p class="font-semibold">
+              Ready to update your profile?
+            </p>
+
+            <p class="text-xs text-slate-500 mt-1">
+              Save your changes or submit the profile for verification.
+            </p>
+
+          </div>
+
+
+          <div class="flex flex-col sm:flex-row gap-3">
+
+            <button
+              type="button"
+              id="saveProfileButton"
+              class="secondary-btn
+                     rounded-xl
+                     px-6 py-3
+                     font-semibold
+                     disabled:opacity-50">
+
+              Save Profile
+
+            </button>
+
+
+            <button
+              type="button"
+              id="submitProfileButton"
+              class="primary-btn
+                     rounded-xl
+                     px-6 py-3
+                     font-bold
+                     disabled:opacity-50">
+
+              Submit for Review →
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </form>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="border-t border-slate-800/70 mt-12">
+
+    <div
+      class="max-w-5xl mx-auto
+             px-6 py-7
+             text-center">
+
+      <p class="text-slate-500 text-sm">
+        CareerReady © 2026
+      </p>
+
+      <p class="text-slate-700 text-xs mt-1">
+        Placement Skill Matcher & Readiness Analyzer
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="../js/api.js"></script>
+  <script src="../js/studentProfile.js"></script>
+
+</body>
+
+</html>

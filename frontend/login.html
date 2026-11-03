@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CareerReady | Login</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 10%, rgba(196, 181, 253, 0.45), transparent 30%),
+        radial-gradient(circle at 90% 90%, rgba(221, 214, 254, 0.50), transparent 30%),
+        #f7f5ff;
+      min-height: 100vh;
+      color: #312e4b;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid #e5defa;
+    }
+
+    .glow-card {
+      box-shadow:
+        0 25px 80px rgba(91, 72, 150, 0.12),
+        0 0 50px rgba(139, 92, 246, 0.06);
+    }
+
+    .brand-glow {
+      box-shadow:
+        0 0 25px rgba(121, 80, 216, 0.25),
+        0 0 60px rgba(167, 139, 250, 0.15);
+    }
+
+    .input-box {
+      transition: all 0.2s ease;
+      background: #ffffff !important;
+      color: #312e4b !important;
+      border-color: #d8d0ef !important;
+    }
+
+    .input-box::placeholder {
+      color: #a29ab7 !important;
+    }
+
+    .input-box:focus {
+      border-color: #8b5cf6 !important;
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.12) !important;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #7950d8, #9875e8);
+      color: #ffffff;
+      transition: all 0.25s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(121, 80, 216, 0.25);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(70px);
+      pointer-events: none;
+      opacity: 0.30;
+    }
+
+    .orb-one {
+      width: 220px;
+      height: 220px;
+      background: #c4b5fd;
+      top: 5%;
+      left: -80px;
+    }
+
+    .orb-two {
+      width: 200px;
+      height: 200px;
+      background: #ddd6fe;
+      bottom: 5%;
+      right: -70px;
+    }
+
+    /* Lavender theme text colors */
+
+    .text-white {
+      color: #312e4b !important;
+    }
+
+    .text-cyan-400 {
+      color: #7950c8 !important;
+    }
+
+    .text-cyan-300 {
+      color: #6841b2 !important;
+    }
+
+    .text-slate-300 {
+      color: #51496d !important;
+    }
+
+    .text-slate-400 {
+      color: #756d8e !important;
+    }
+
+    .text-slate-500 {
+      color: #8a829f !important;
+    }
+
+    .text-slate-600 {
+      color: #9188a7 !important;
+    }
+
+    .text-emerald-400 {
+      color: #16866a !important;
+    }
+
+    /* Brand logo */
+
+    .bg-gradient-to-br.from-blue-500.to-cyan-400 {
+      background-image: linear-gradient(135deg, #7950d8, #b39af5) !important;
+    }
+
+    /* Borders and separators */
+
+    .border-slate-700,
+    .border-slate-800\/80 {
+      border-color: #e2daf5 !important;
+    }
+
+    /* Error message colors */
+
+    .border-red-500\/30 {
+      border-color: #f0caca !important;
+    }
+
+    .bg-red-500\/10 {
+      background-color: #fff0f0 !important;
+    }
+
+    .text-red-300 {
+      color: #bd4545 !important;
+    }
+
+    /* Focus ring */
+
+    .focus\:ring-blue-500\/40:focus {
+      --tw-ring-color: rgba(139, 92, 246, 0.35) !important;
+    }
+  </style>
+</head>
+
+<body class="text-white">
+
+  <div class="orb orb-one"></div>
+  <div class="orb orb-two"></div>
+
+  <main class="min-h-screen flex items-center justify-center px-5 py-10 relative z-10">
+
+    <section class="w-full max-w-md">
+
+      <!-- BRAND -->
+      <div class="text-center mb-8">
+
+        <div
+          class="inline-flex items-center justify-center
+                 w-16 h-16 rounded-2xl
+                 bg-gradient-to-br from-blue-500 to-cyan-400
+                 brand-glow mb-5">
+
+          <span class="text-2xl font-black text-white">
+            CR
+          </span>
+
+        </div>
+
+        <h1 class="text-4xl font-black tracking-tight">
+          Career<span class="text-cyan-400">Ready</span>
+        </h1>
+
+        <p class="text-slate-400 mt-2 text-sm">
+          Placement Skill Matcher & Readiness Analyzer
+        </p>
+
+      </div>
+
+
+      <!-- LOGIN CARD -->
+      <div class="glass glow-card rounded-3xl p-7 sm:p-8">
+
+        <div class="mb-7">
+
+          <div class="flex items-center gap-2 mb-3">
+
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+
+            <span class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">
+              Secure Student Portal
+            </span>
+
+          </div>
+
+          <h2 class="text-2xl font-bold">
+            Welcome back
+          </h2>
+
+          <p class="text-slate-400 text-sm mt-2">
+            Sign in to continue your placement journey.
+          </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+        <div
+          id="loginError"
+          class="hidden mb-5 rounded-xl
+                 border border-red-500/30
+                 bg-red-500/10
+                 px-4 py-3
+                 text-sm text-red-300">
+        </div>
+
+
+        <!-- FORM -->
+        <form id="loginForm" class="space-y-5" novalidate>
+
+          <!-- EMAIL -->
+          <div>
+
+            <label
+              for="email"
+              class="block text-sm font-medium text-slate-300 mb-2">
+
+              Email Address
+
+            </label>
+
+            <div class="relative">
+
+              <span
+                class="absolute left-4 top-1/2 -translate-y-1/2
+                       text-slate-500">
+                ✉
+              </span>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+                class="input-box w-full rounded-xl
+                       border border-slate-700
+                       bg-slate-950/70
+                       pl-11 pr-4 py-3.5
+                       text-white
+                       placeholder-slate-600
+                       outline-none">
+
+            </div>
+
+          </div>
+
+
+          <!-- PASSWORD -->
+          <div>
+
+            <div class="flex items-center justify-between mb-2">
+
+              <label
+                for="password"
+                class="block text-sm font-medium text-slate-300">
+
+                Password
+
+              </label>
+
+              <span class="text-xs text-slate-500">
+                Protected
+              </span>
+
+            </div>
+
+            <div class="relative">
+
+              <span
+                class="absolute left-4 top-1/2 -translate-y-1/2
+                       text-slate-500">
+                🔒
+              </span>
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+                class="input-box w-full rounded-xl
+                       border border-slate-700
+                       bg-slate-950/70
+                       pl-11 pr-4 py-3.5
+                       text-white
+                       placeholder-slate-600
+                       outline-none">
+
+            </div>
+
+          </div>
+
+
+          <!-- BUTTON -->
+          <button
+            type="submit"
+            id="loginButton"
+            class="login-btn w-full rounded-xl
+                   px-4 py-3.5
+                   font-bold text-white
+                   focus:outline-none
+                   focus:ring-2
+                   focus:ring-blue-500/40
+                   disabled:cursor-not-allowed
+                   disabled:opacity-60">
+
+            <span class="flex items-center justify-center gap-2">
+              Sign In
+              <span>→</span>
+            </span>
+
+          </button>
+
+        </form>
+
+
+        <!-- REGISTER -->
+        <div class="mt-7 pt-6 border-t border-slate-800/80 text-center">
+
+          <p class="text-sm text-slate-400">
+
+            Don't have an account?
+
+            <a
+              href="./register.html"
+              class="font-semibold text-cyan-400 hover:text-cyan-300 transition">
+
+              Create a student account
+
+            </a>
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- SECURITY -->
+      <div class="mt-6 text-center">
+
+        <p class="text-xs text-slate-500">
+          🔐 Secure authentication • Role-based access • Protected APIs
+        </p>
+
+        <p class="text-[11px] text-slate-600 mt-2">
+          Your account role is determined securely by CareerReady.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+
+</body>
+
+</html>

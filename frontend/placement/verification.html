@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile Verification | CareerReady</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .sidebar {
+            background: #0f172a;
+        }
+
+        .nav-item {
+            transition: 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+        }
+
+        .nav-item.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .student-card {
+            transition: 0.2s;
+        }
+
+        .student-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="min-h-screen flex">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar w-72 min-h-screen text-white hidden lg:flex flex-col">
+
+        <div class="px-6 py-6 border-b border-slate-800">
+
+            <h1 class="text-2xl font-black">
+                Career<span class="text-blue-400">Ready</span>
+            </h1>
+
+            <p class="text-sm text-slate-400 mt-1">
+                Placement Management
+            </p>
+
+        </div>
+
+
+        <nav class="flex-1 p-4 space-y-2">
+
+            <a href="./dashboard.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Dashboard
+            </a>
+
+            <a href="./students.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Students
+            </a>
+
+            <a href="./verification.html"
+               class="nav-item active block rounded-xl px-4 py-3 font-semibold">
+                Verification
+            </a>
+
+            <a href="./drives.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Recruitment Drives
+            </a>
+
+            <a href="./applications.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Applications
+            </a>
+
+            <a href="./analytics.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Analytics
+            </a>
+
+            <a href="./reports.html"
+               class="nav-item block rounded-xl px-4 py-3 text-slate-300">
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="p-4 border-t border-slate-800">
+
+            <button
+                id="logoutButton"
+                class="w-full rounded-xl bg-slate-800 hover:bg-slate-700 py-3 font-semibold">
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="flex-1 min-w-0">
+
+        <header class="bg-white border-b border-slate-200">
+
+            <div class="px-6 lg:px-10 py-6">
+
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                    <div>
+
+                        <p class="text-sm text-blue-600 font-semibold">
+                            Placement Management
+                        </p>
+
+                        <h2 class="text-3xl font-bold mt-1">
+                            Profile Verification
+                        </h2>
+
+                        <p class="text-slate-500 mt-2">
+                            Review student profiles before they become placement-ready.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="refreshButton"
+                        class="px-5 py-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-semibold">
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div class="p-6 lg:p-10">
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="hidden mb-6 rounded-xl px-5 py-4 text-sm">
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Pending Review
+                    </p>
+
+                    <p
+                        id="pendingCount"
+                        class="text-4xl font-bold text-amber-600 mt-3">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Verified Profiles
+                    </p>
+
+                    <p
+                        id="verifiedCount"
+                        class="text-4xl font-bold text-emerald-600 mt-3">
+                        --
+                    </p>
+
+                </div>
+
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+
+                    <p class="text-sm text-slate-500">
+                        Review Status
+                    </p>
+
+                    <p class="text-lg font-bold text-blue-600 mt-4">
+                        Placement Cell Review
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <section class="mb-10">
+
+                <div class="flex items-center justify-between mb-5">
+
+                    <div>
+
+                        <h3 class="text-xl font-bold">
+                            Profiles Awaiting Review
+                        </h3>
+
+                        <p class="text-sm text-slate-500 mt-1">
+                            Review submitted student profiles.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="pendingLoading"
+                    class="bg-white border border-slate-200 rounded-2xl p-10 text-center">
+
+                    <p class="text-slate-500">
+                        Loading profiles...
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="pendingEmpty"
+                    class="hidden bg-white border border-slate-200 rounded-2xl p-10 text-center">
+
+                    <div class="text-4xl mb-3">
+                        ✓
+                    </div>
+
+                    <h3 class="font-bold">
+                        No profiles waiting for verification
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mt-2">
+                        All submitted profiles have been reviewed.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="pendingContainer"
+                    class="hidden grid grid-cols-1 xl:grid-cols-2 gap-5">
+                </div>
+
+            </section>
+
+
+            <!-- VERIFIED -->
+
+            <section>
+
+                <div class="mb-5">
+
+                    <h3 class="text-xl font-bold">
+                        Verified Profiles
+                    </h3>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                        Students whose profiles have been approved.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="verifiedLoading"
+                    class="bg-white border border-slate-200 rounded-2xl p-10 text-center">
+
+                    <p class="text-slate-500">
+                        Loading verified profiles...
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="verifiedEmpty"
+                    class="hidden bg-white border border-slate-200 rounded-2xl p-10 text-center">
+
+                    <p class="text-slate-500">
+                        No verified profiles found.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="verifiedContainer"
+                    class="hidden grid grid-cols-1 xl:grid-cols-2 gap-5">
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     PROFILE REVIEW MODAL
+========================================================= -->
+
+<div
+    id="reviewModal"
+    class="hidden fixed inset-0 z-50 bg-slate-900/60 flex items-center justify-center p-4">
+
+    <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto">
+
+        <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-5 flex justify-between items-center">
+
+            <div>
+
+                <h2 class="text-xl font-bold">
+                    Student Profile Review
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Review the submitted information before verification.
+                </p>
+
+            </div>
+
+
+            <button
+                id="closeModal"
+                class="text-2xl text-slate-400 hover:text-slate-700">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="p-6">
+
+            <!-- BASIC -->
+
+            <div class="flex items-center gap-4 mb-7">
+
+                <div
+                    id="studentInitial"
+                    class="w-14 h-14 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl font-bold">
+                    S
+                </div>
+
+                <div>
+
+                    <h3
+                        id="studentName"
+                        class="text-xl font-bold">
+                        Student
+                    </h3>
+
+                    <p
+                        id="studentEmail"
+                        class="text-sm text-slate-500 mt-1">
+                        --
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACADEMIC -->
+
+            <div class="mb-7">
+
+                <h3 class="font-bold mb-4">
+                    Academic Information
+                </h3>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+                    <div class="bg-slate-50 rounded-xl p-4">
+
+                        <p class="text-xs text-slate-400">
+                            University
+                        </p>
+
+                        <p id="university"
+                           class="font-semibold mt-1">
+                            --
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-slate-50 rounded-xl p-4">
+
+                        <p class="text-xs text-slate-400">
+                            Degree
+                        </p>
+
+                        <p id="degree"
+                           class="font-semibold mt-1">
+                            --
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-slate-50 rounded-xl p-4">
+
+                        <p class="text-xs text-slate-400">
+                            Specialization
+                        </p>
+
+                        <p id="specialization"
+                           class="font-semibold mt-1">
+                            --
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-slate-50 rounded-xl p-4">
+
+                        <p class="text-xs text-slate-400">
+                            Program
+                        </p>
+
+                        <p id="programDuration"
+                           class="font-semibold mt-1">
+                            --
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-slate-50 rounded-xl p-4">
+
+                        <p class="text-xs text-slate-400">
+                            Graduation Year
+                        </p>
+
+                        <p id="graduationYear"
+                           class="font-semibold mt-1">
+                            --
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-slate-50 rounded-xl p-4">
+
+                        <p class="text-xs text-slate-400">
+                            CGPA
+                        </p>
+
+                        <p id="cgpa"
+                           class="font-semibold mt-1">
+                            --
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SKILLS -->
+
+            <div class="mb-7">
+
+                <h3 class="font-bold mb-3">
+                    Technical Skills
+                </h3>
+
+                <div
+                    id="skills"
+                    class="flex flex-wrap gap-2">
+                </div>
+
+            </div>
+
+
+            <!-- CERTIFICATIONS -->
+
+            <div class="mb-7">
+
+                <h3 class="font-bold mb-3">
+                    Certifications
+                </h3>
+
+                <div
+                    id="certifications"
+                    class="space-y-3">
+                </div>
+
+            </div>
+
+
+            <!-- PROJECTS -->
+
+            <div class="mb-7">
+
+                <h3 class="font-bold mb-3">
+                    Projects
+                </h3>
+
+                <div
+                    id="projects"
+                    class="space-y-3">
+                </div>
+
+            </div>
+
+
+            <!-- EXPERIENCE -->
+
+            <div class="mb-7">
+
+                <h3 class="font-bold mb-3">
+                    Experience
+                </h3>
+
+                <div
+                    id="experience"
+                    class="space-y-3">
+                </div>
+
+            </div>
+
+
+            <!-- COMMENTS -->
+
+            <div class="border-t border-slate-200 pt-6">
+
+                <label class="block font-semibold mb-2">
+                    Review Comments
+                </label>
+
+                <textarea
+                    id="reviewComments"
+                    rows="4"
+                    placeholder="Add comments or mention corrections required..."
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"></textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="sticky bottom-0 bg-white border-t border-slate-200 px-6 py-5 flex flex-col sm:flex-row justify-end gap-3">
+
+            <button
+                id="correctionButton"
+                class="rounded-xl bg-amber-500 hover:bg-amber-600 text-white px-5 py-3 font-semibold">
+                Request Correction
+            </button>
+
+            <button
+                id="verifyButton"
+                class="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 font-semibold">
+                ✓ Verify Profile
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../js/api.js"></script>
+<script src="../js/placementVerification.js"></script>
+
+</body>
+</html>
