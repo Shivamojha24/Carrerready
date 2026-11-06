@@ -7,6 +7,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const path = require("path");
 
 const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
@@ -175,14 +176,17 @@ app.get(
 // ROOT
 // ==========================================
 
-app.get(
-  "/",
-  (req, res) => {
-    res.status(200).json({
-      message: "CareerReady API is running"
-    });
-  }
-);
+// ==========================================
+// SERVE FRONTEND
+// ==========================================
+
+const frontendPath = path.join(__dirname, "../frontend");
+
+app.use(express.static(frontendPath));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(frontendPath, "login.html"));
+});
 
 // ==========================================
 // 404 HANDLER
