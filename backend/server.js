@@ -42,17 +42,23 @@ const PORT = process.env.PORT || 5000;
 // SECURITY
 // ==========================================
 
-app.use(helmet());
-
 app.use(
-  cors({
-    origin:
-      process.env.FRONTEND_URL ||
-      "http://127.0.0.1:5500",
-    credentials: true
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": [
+          "'self'",
+          "https://cdn.tailwindcss.com"
+        ],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'"
+        ]
+      }
+    }
   })
 );
-
 // ==========================================
 // BODY PARSER
 // ==========================================
